@@ -20,14 +20,51 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
       - name: Run calculator tests
         run: node test.js
+
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html _site/index.html
+          cp index.html robots.txt sitemap.xml _site/
+
+      - name: Browser smoke tests
+        run: |
+          python3 -m http.server 4173 --directory _site >/tmp/firmakroner-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
+            sleep 0.25
+          done
+          curl -fsS http://127.0.0.1:4173/ >/dev/null
+          curl -fsS http://127.0.0.1:4173/robots.txt | grep -q 'sitemap.xml'
+          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'Firmakroner/'
+
+          CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          test -n "$CHROME"
+          FLAGS='--headless --no-sandbox --disable-gpu --disable-dev-shm-usage --no-first-run --no-default-browser-check --virtual-time-budget=2000'
+
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/' > /tmp/default.html
+          grep -q '4.800' /tmp/default.html
+          grep -q '8.000' /tmp/default.html
+
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/?p=10000&v=25&vr=1&vd=100&td=75&tr=40&t=asset&d=25' > /tmp/mixed.html
+          grep -q 'Skatteestimat sat på pause' /tmp/mixed.html
+          grep -q 'Delvist privat/erhvervsmæssigt benyttede driftsmidler' /tmp/mixed.html
+
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/?p=50000&v=25&vr=1&vd=100&td=100&tr=40&t=asset&d=25' > /tmp/large.html
+          grep -q 'Første års afskrivning i estimat' /tmp/large.html
+          grep -q '36.000 kr.-grænsen' /tmp/large.html
+
+          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile.png 'http://127.0.0.1:4173/'
+          test -s /tmp/mobile.png
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
