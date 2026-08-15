@@ -32,7 +32,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html momsregistrering-under-50000.html faktura-buffer.html robots.txt sitemap.xml cc4bb9dc90e3aa702484656973b7baf2.txt _site/
+          cp index.html firmakoeb.html momsregistrering-under-50000.html faktura-buffer.html om.html privatliv.html affiliate.html robots.txt sitemap.xml cc4bb9dc90e3aa702484656973b7baf2.txt _site/
 
       - name: Browser smoke tests
         run: |
@@ -44,28 +44,38 @@ jobs:
             if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
             sleep 0.25
           done
-          curl -fsS http://127.0.0.1:4173/ >/dev/null
-          curl -fsS http://127.0.0.1:4173/momsregistrering-under-50000.html >/dev/null
-          curl -fsS http://127.0.0.1:4173/faktura-buffer.html >/dev/null
+
+          for path in / /firmakoeb.html /momsregistrering-under-50000.html /faktura-buffer.html /om.html /privatliv.html /affiliate.html; do
+            curl -fsS "http://127.0.0.1:4173${path}" >/dev/null
+          done
           curl -fsS http://127.0.0.1:4173/cc4bb9dc90e3aa702484656973b7baf2.txt | grep -q 'cc4bb9dc90e3aa702484656973b7baf2'
           curl -fsS http://127.0.0.1:4173/robots.txt | grep -q 'sitemap.xml'
-          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'faktura-buffer.html'
+          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'firmakoeb.html'
+          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'affiliate.html'
 
           CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           test -n "$CHROME"
-          FLAGS='--headless --no-sandbox --disable-gpu --disable-dev-shm-usage --no-first-run --no-default-browser-check --virtual-time-budget=2000'
+          FLAGS='--headless --no-sandbox --disable-gpu --disable-dev-shm-usage --no-first-run --no-default-browser-check --virtual-time-budget=2200'
 
-          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/' > /tmp/default.html
-          grep -q '4.800' /tmp/default.html
-          grep -q '8.000' /tmp/default.html
-          echo 'home calculator smoke ok'
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/' > /tmp/portal.html
+          grep -q 'Små virksomhedstal i almindelige kroner' /tmp/portal.html
+          grep -q 'firmakoeb.html' /tmp/portal.html
+          grep -q 'momsregistrering-under-50000.html' /tmp/portal.html
+          grep -q 'faktura-buffer.html' /tmp/portal.html
+          grep -q 'Affiliate' /tmp/portal.html
+          echo 'portal smoke ok'
 
-          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/?p=10000&v=25&vr=1&vd=100&td=75&tr=40&t=asset&d=25' > /tmp/mixed.html
-          grep -q 'Skatteestimat sat på pause' /tmp/mixed.html
-          grep -q 'Delvist privat/erhvervsmæssigt benyttede driftsmidler' /tmp/mixed.html
-          echo 'mixed-use smoke ok'
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/firmakoeb.html' > /tmp/purchase.html
+          grep -q '4.800' /tmp/purchase.html
+          grep -q '8.000' /tmp/purchase.html
+          echo 'firm purchase smoke ok'
 
-          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/?p=50000&v=25&vr=1&vd=100&td=100&tr=40&t=asset&d=25' > /tmp/large.html
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/?p=10000&v=25&vr=1&vd=100&td=75&tr=40&t=asset&d=25' > /tmp/legacy-share.html
+          grep -q 'Skatteestimat sat på pause' /tmp/legacy-share.html
+          grep -q 'Delvist privat/erhvervsmæssigt benyttede driftsmidler' /tmp/legacy-share.html
+          echo 'legacy share redirect smoke ok'
+
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/firmakoeb.html?p=50000&v=25&vr=1&vd=100&td=100&tr=40&t=asset&d=25' > /tmp/large.html
           grep -q 'Første års afskrivning i estimat' /tmp/large.html
           grep -q '36.000 kr.-grænsen' /tmp/large.html
           echo 'large-asset smoke ok'
@@ -74,7 +84,6 @@ jobs:
           grep -q '4.000' /tmp/vat-choice.html
           grep -q 'økonomisk dårligere' /tmp/vat-choice.html
           grep -q 'mindst 2 kalenderår' /tmp/vat-choice.html
-          grep -q 'Kan frivillig momsregistrering betale sig?' /tmp/vat-choice.html
           echo 'VAT-choice smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/faktura-buffer.html' > /tmp/invoice-buffer.html
@@ -83,8 +92,15 @@ jobs:
           grep -q 'Du vælger selv skattebufferen' /tmp/invoice-buffer.html
           echo 'invoice-buffer smoke ok'
 
-          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-home.png 'http://127.0.0.1:4173/'
-          test -s /tmp/mobile-home.png
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/affiliate.html' > /tmp/affiliate.html
+          grep -q 'endnu ingen aktive affiliate-links' /tmp/affiliate.html
+          grep -q 'Beregninger påvirkes aldrig' /tmp/affiliate.html
+          echo 'disclosure smoke ok'
+
+          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-portal.png 'http://127.0.0.1:4173/'
+          test -s /tmp/mobile-portal.png
+          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-purchase.png 'http://127.0.0.1:4173/firmakoeb.html'
+          test -s /tmp/mobile-purchase.png
           "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-vat.png 'http://127.0.0.1:4173/momsregistrering-under-50000.html'
           test -s /tmp/mobile-vat.png
           "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-buffer.png 'http://127.0.0.1:4173/faktura-buffer.html'
@@ -130,8 +146,12 @@ jobs:
             "keyLocation": "$KEY_LOCATION",
             "urlList": [
               "https://kontormakker.github.io/Firmakroner/",
+              "https://kontormakker.github.io/Firmakroner/firmakoeb.html",
               "https://kontormakker.github.io/Firmakroner/momsregistrering-under-50000.html",
-              "https://kontormakker.github.io/Firmakroner/faktura-buffer.html"
+              "https://kontormakker.github.io/Firmakroner/faktura-buffer.html",
+              "https://kontormakker.github.io/Firmakroner/om.html",
+              "https://kontormakker.github.io/Firmakroner/privatliv.html",
+              "https://kontormakker.github.io/Firmakroner/affiliate.html"
             ]
           }
           EOF
