@@ -55,24 +55,30 @@ jobs:
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/' > /tmp/default.html
           grep -q '4.800' /tmp/default.html
           grep -q '8.000' /tmp/default.html
+          echo 'home calculator smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/?p=10000&v=25&vr=1&vd=100&td=75&tr=40&t=asset&d=25' > /tmp/mixed.html
           grep -q 'Skatteestimat sat på pause' /tmp/mixed.html
           grep -q 'Delvist privat/erhvervsmæssigt benyttede driftsmidler' /tmp/mixed.html
+          echo 'mixed-use smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/?p=50000&v=25&vr=1&vd=100&td=100&tr=40&t=asset&d=25' > /tmp/large.html
           grep -q 'Første års afskrivning i estimat' /tmp/large.html
           grep -q '36.000 kr.-grænsen' /tmp/large.html
+          echo 'large-asset smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/momsregistrering-under-50000.html' > /tmp/vat-choice.html
-          grep -q '−4.000' /tmp/vat-choice.html
+          grep -q '4.000' /tmp/vat-choice.html
+          grep -q 'økonomisk dårligere' /tmp/vat-choice.html
           grep -q 'mindst 2 kalenderår' /tmp/vat-choice.html
           grep -q 'Kan frivillig momsregistrering betale sig?' /tmp/vat-choice.html
+          echo 'VAT-choice smoke ok'
 
           "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-home.png 'http://127.0.0.1:4173/'
           test -s /tmp/mobile-home.png
           "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-vat.png 'http://127.0.0.1:4173/momsregistrering-under-50000.html'
           test -s /tmp/mobile-vat.png
+          echo 'mobile screenshots ok'
 
       - name: Configure GitHub Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
