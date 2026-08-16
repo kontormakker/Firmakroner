@@ -38,10 +38,11 @@
       inPeriod:Boolean(input.greenInPeriod),
       factoryNew:Boolean(input.greenFactoryNew),
       electricOrBattery:Boolean(input.greenElectricOrBattery),
+      noImmediateWriteOff:Boolean(input.greenNoImmediateWriteOff),
       excludedType:Boolean(input.greenExcludedType),
       fossilCapable:Boolean(input.greenFossilCapable)
     };
-    const greenEligible=type==='asset'&&!mixedUseAsset&&greenConditions.inPeriod&&greenConditions.factoryNew&&greenConditions.electricOrBattery&&!greenConditions.excludedType&&!greenConditions.fossilCapable;
+    const greenEligible=type==='asset'&&!mixedUseAsset&&greenConditions.inPeriod&&greenConditions.factoryNew&&greenConditions.electricOrBattery&&greenConditions.noImmediateWriteOff&&!greenConditions.excludedType&&!greenConditions.fossilCapable;
     const greenApplied=greenRequested&&greenEligible;
 
     let ordinaryTaxBase=0;
