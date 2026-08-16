@@ -49,12 +49,13 @@ jobs:
             sleep 0.25
           done
 
-          for path in / /firmakoeb.html /momsregistrering-under-50000.html /faktura-buffer.html /udgifter-foer-opstart.html /koersel-privat-bil.html /telefon-internet.html /reklame-eller-repraesentation.html /hjemmekontor-fradrag.html /om.html /privatliv.html /affiliate.html; do
+          for path in / /firmakoeb.html /momsregistrering-under-50000.html /faktura-buffer.html /udgifter-foer-opstart.html /koersel-privat-bil.html /telefon-internet.html /reklame-eller-repraesentation.html /hjemmekontor-fradrag.html /kursus-eller-uddannelse-fradrag.html /satser-2026.html /om.html /privatliv.html /affiliate.html; do
             curl -fsS "http://127.0.0.1:4173${path}" >/dev/null
           done
           curl -fsS http://127.0.0.1:4173/cc4bb9dc90e3aa702484656973b7baf2.txt | grep -q 'cc4bb9dc90e3aa702484656973b7baf2'
           curl -fsS http://127.0.0.1:4173/robots.txt | grep -q 'sitemap.xml'
-          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'hjemmekontor-fradrag.html'
+          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'kursus-eller-uddannelse-fradrag.html'
+          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'satser-2026.html'
 
           CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           test -n "$CHROME"
@@ -62,7 +63,7 @@ jobs:
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/' > /tmp/portal.html
           grep -q 'Små virksomhedstal i almindelige kroner' /tmp/portal.html
-          for href in firmakoeb.html momsregistrering-under-50000.html faktura-buffer.html udgifter-foer-opstart.html koersel-privat-bil.html telefon-internet.html reklame-eller-repraesentation.html hjemmekontor-fradrag.html; do
+          for href in firmakoeb.html momsregistrering-under-50000.html faktura-buffer.html udgifter-foer-opstart.html koersel-privat-bil.html telefon-internet.html reklame-eller-repraesentation.html hjemmekontor-fradrag.html kursus-eller-uddannelse-fradrag.html satser-2026.html; do
             grep -q "$href" /tmp/portal.html
           done
 
@@ -117,13 +118,27 @@ jobs:
           grep -q 'Stærkt signal: typisk nej til selve rummet' /tmp/home-office.html
           grep -q '6.000 kr.' /tmp/home-office.html
           grep -q 'Ingen falsk huslejeberegning' /tmp/home-office.html
-          echo 'home-office smoke ok'
+
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/kursus-eller-uddannelse-fradrag.html' > /tmp/course.html
+          grep -q 'Stærkt signal: mulig driftsudgift' /tmp/course.html
+          grep -q '12.000 kr.' /tmp/course.html
+          grep -q '“Muligt” er ikke “godkendt”' /tmp/course.html
+          echo 'course smoke ok'
+
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/satser-2026.html' > /tmp/rates.html
+          grep -q '50.000 kr.' /tmp/rates.html
+          grep -q '36.000 kr.' /tmp/rates.html
+          grep -q '16.900 kr.' /tmp/rates.html
+          grep -q '3.500 kr.' /tmp/rates.html
+          grep -q '3,94 kr./km' /tmp/rates.html
+          grep -q '2,28 kr./km' /tmp/rates.html
+          echo '2026 rates smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/affiliate.html' > /tmp/affiliate.html
           grep -q 'endnu ingen aktive affiliate-links' /tmp/affiliate.html
           grep -q 'Beregninger påvirkes aldrig' /tmp/affiliate.html
 
-          for page in portal: purchase:firmakoeb.html vat:momsregistrering-under-50000.html buffer:faktura-buffer.html startup:udgifter-foer-opstart.html mileage:koersel-privat-bil.html phone:telefon-internet.html representation:reklame-eller-repraesentation.html homeoffice:hjemmekontor-fradrag.html; do
+          for page in portal: purchase:firmakoeb.html vat:momsregistrering-under-50000.html buffer:faktura-buffer.html startup:udgifter-foer-opstart.html mileage:koersel-privat-bil.html phone:telefon-internet.html representation:reklame-eller-repraesentation.html homeoffice:hjemmekontor-fradrag.html course:kursus-eller-uddannelse-fradrag.html rates:satser-2026.html; do
             name="${page%%:*}"; path="${page#*:}"
             "$CHROME" $FLAGS --window-size=390,844 --screenshot="/tmp/mobile-${name}.png" "http://127.0.0.1:4173/${path}"
             test -s "/tmp/mobile-${name}.png"
