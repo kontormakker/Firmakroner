@@ -20,9 +20,11 @@ Hvis et spørgsmål ikke kan afgøres sikkert ud fra brugerens svar, skal værkt
 
 Gratis, søgbare beslutningsværktøjer → brugeren løser et reelt problem → kun når resultatet naturligt peger på en ekstern tjeneste, kan FirmaKroner vise et tydeligt markeret reklamelink.
 
-Det første aktive kommercielle spor er Dinero via Partner-Ads på den kontekstuelle digital-bogføringsside. Separat virksomhedsadresse, erhvervskonto og LEI er valideringsspor, men de har ingen aktive reklamelinks. Bank/NemKonto-sporet er bevidst bygget gratis først, fordi den korrekte konklusion ofte kan være at spørge brugerens eksisterende bank eller bruge retten til basal erhvervskonto frem for at købe en ny tjeneste. LEI-sporet er tilsvarende bygget som et behovstjek før et køb: mange brugere skal slet ikke have LEI, og den konklusion må aldrig påvirkes af, at Partner-Ads aktuelt har et LEI-program. Gratis myndighedsløsninger og den korrekte “du behøver ikke købe noget”-konklusion skal altid komme før en betalt løsning. Provision må aldrig ændre et resultat.
+De aktive kommercielle spor er Dinero og LEI Service DK via Partner-Ads. Dinero vises kun på den kontekstuelle digital-bogføringsside. LEI Service DK vises kun på LEI-checkeren, og kun når checkerens uafhængige regelresultat siger, at LEI er nødvendigt i det valgte scenario. Separat virksomhedsadresse og erhvervskonto er fortsat valideringsspor uden aktive reklamelinks.
 
-Der er ingen analytics, cookies, login, backend eller betalte driftstjenester. Det aktive Dinero-link er et almindeligt udgående reklamelink, som først aktiveres efter brugerens samtykke; ingen Partner-Ads-script eller trackingpixel indlæses på FirmaKroner.
+Bank/NemKonto-sporet er bevidst bygget gratis først, fordi den korrekte konklusion ofte kan være at spørge brugerens eksisterende bank eller bruge retten til basal erhvervskonto frem for at købe en ny tjeneste. LEI-sporet er tilsvarende bygget som et behovstjek før et køb: mange brugere skal slet ikke have LEI. Den konklusion må aldrig påvirkes af provision.
+
+Der er ingen analytics, login, backend eller betalte driftstjenester. Partner-Ads-links er almindelige udgående reklamelinks, som først aktiveres efter brugerens samtykke; ingen Partner-Ads-script, trackingpixel, iframe eller banner indlæses på FirmaKroner ved sidevisning.
 
 ## Kritisk validering
 
@@ -34,7 +36,7 @@ Et nyt værktøj må kun overleve, hvis alle tre spørgsmål kan besvares rimeli
 
 Bank/NemKonto-checkeren overlevede denne gate, fordi søgninger om krav til erhvervskonto/NemKonto er konkrete og kommercielt relevante, men søgeresultaterne blander ofte NemKonto, bankvilkår og lovkrav sammen. Differentieringen er derfor en interaktiv, konservativ afklaring med officielle kilder — ikke endnu en banksammenligning. Eventuel monetisering må først komme efter separat programgodkendelse og produktkontrol.
 
-LEI-checkeren overlevede samme gate, fordi problemet er meget konkret og handlingsnært: juridiske personer kan blive stoppet fra værdipapirhandel uden LEI, mens privatpersoner og almindelige enkeltmandsvirksomheder ofte ikke skal købe koden. Søgeresultaterne blander regulatoriske svar og sælgere, så FirmaKroners værdi er at afgøre behovet først med Finanstilsynet som facit. Partner-Ads viser aktuelt LEI Service DK med 120 DKK pr. lead/salg, men programmet er ikke publiceret på FirmaKroner, før selve mediet er godkendt og det udstedte link er kontrolleret. LEI Service er gennemgået som registreringsagent via RapidLEI; vi kopierer ikke deres pris-, hastigheds- eller “billigst”-påstande ind i værktøjet.
+LEI-checkeren overlevede samme gate, fordi problemet er meget konkret og handlingsnært: juridiske personer kan blive stoppet fra værdipapirhandel uden LEI, mens privatpersoner og almindelige enkeltmandsvirksomheder ofte ikke skal købe koden. FirmaKroners værdi er at afgøre behovet først med Finanstilsynet som facit. Det udstedte LEI Service DK-link er partner-id `57323`, banner-id `85033`; det aktiveres kun efter samtykke og kun når resultatet kræver LEI. FirmaKroner kopierer ikke udbyderens pris-, hastigheds- eller “billigst”-påstande ind i værktøjet.
 
 Generiske artikler og højkonkurrence-sammenligninger bygges ikke bare for at øge sidetallet.
 
