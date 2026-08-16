@@ -38,7 +38,8 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 ## 5. Søgemaskiner og drift
 
 - Google Search Console-verifikationstagget på forsiden må ikke fjernes ved senere refaktorering.
-- Hver URL i `sitemap.xml` skal pege på en faktisk offentlig fil med korrekt canonical.
+- Hver URL i `sitemap.xml` skal pege på en faktisk offentlig fil. Nye sider skal have korrekt canonical.
+- Den oprindelige `firmakoeb.html` er midlertidigt den eneste dokumenterede canonical-undtagelse, fordi den tidligere blev bevaret byte-for-byte ved portalskiftet; undtagelsen må ikke kopieres til nye sider og skal fjernes i en senere kontrolleret migration.
 - Efter produktion-deploy skal den offentlige `sitemap.xml` hentes og XML-parses, før release-flowet betragtes som fuldt grønt.
 - IndexNow må først køre efter en succesfuld Pages-deploy.
 
