@@ -1,6 +1,6 @@
 # FirmaKroner — compliance- og auditregler
 
-Senest revideret: 2026-08-16.
+Senest revideret: 2026-08-17.
 
 FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert klingende, men fagligt forkert svar. Disse regler er en release-gate, ikke kun dokumentation.
 
@@ -22,6 +22,8 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 
 ## 3. Affiliate og markedsføring
 
+- FirmaKroner må aldrig beskrive et affiliate-samarbejde som aktivt, før den relevante konto/programgodkendelse faktisk er på plads.
+- Før godkendelse må der ikke ligge aktive affiliate-links eller provisionpåstande på offentlige sider.
 - Kommercielle links markeres direkte og synligt som `Reklame · reklamelink for [brand]` eller tilsvarende tydeligt sprog.
 - Affiliate-links bruger `rel="sponsored nofollow noopener"`.
 - FirmaKroner indlæser ikke Partner-Ads-scripts, trackingpixels, iframes eller bannere før brugeren selv klikker på et reklamelink.
@@ -44,7 +46,7 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 - Efter produktion-deploy skal den offentlige `sitemap.xml` hentes og XML-parses, før release-flowet betragtes som fuldt grønt.
 - IndexNow må først køre efter en succesfuld Pages-deploy.
 
-## 6. Faglig audit 2026-08-16
+## 6. Faglig audit 2026-08-16/17
 
 Følgende områder er dobbelttjekket mod aktuelle officielle kilder og den implementerede logik:
 
@@ -61,8 +63,8 @@ Følgende områder er dobbelttjekket mod aktuelle officielle kilder og den imple
 - **Fakturakrav:** fuld kontra forenklet faktura under 3.000 kr., kundens ret til fuld faktura og nødvendige felter er afgrænset til almindeligt dansk B2B. Status: **bestået**.
 - **Hobby/erhverv:** værktøjet giver signaler, ikke juridisk klassifikation, og hobbyunderskud modregnes ikke i anden indkomst. Status: **bestået**.
 - **Digital bogføring 2026:** over 300.000 kr. i to på hinanden følgende forudgående indkomstår; præcis 300.000 kr. er ikke over; nye virksomheder kan tidligst rammes fra tredje indkomstår. Status: **bestået**.
-- **Firmakøb 2026:** legacy-siden er erstattet med en testbar model. 36.000-kr.-grænsen anvendes på faktisk omkostningsgrundlag efter det momsfradrag, brugeren angiver, så ikke-fradraget moms forbliver i anskaffelsessummen. Blandet brug stopper skatteestimatet og viser 16.900-kr.-særgrænsen. Kvalificerende 108 %-saldo kræver brugerbekræftelse af periode, fabriksnyhed, elektrisk/batteridrift og fravær af de eksplicitte undtagelser; værktøjet viser førsteårs-effekt og gør opmærksom på, at 108 % ikke nødvendigvis giver størst fradrag i købsåret. Gamle query-parametre bevares. Status: **bestået efter migration og rettelse**.
-- **Dinero-reklame:** Dinero beskrives som ét af flere registrerede bogføringssystemer; link markeres som reklame og påvirker ikke resultatet. Status: **bestået**.
+- **Firmakøb 2026:** 36.000-kr.-grænsen anvendes på faktisk omkostningsgrundlag efter det momsfradrag, brugeren angiver, så ikke-fradraget moms forbliver i anskaffelsessummen. Blandet brug stopper skatteestimatet og viser 16.900-kr.-særgrænsen. Kvalificerende 108 %-saldo kræver brugerbekræftelse af periode, fabriksnyhed, elektrisk/batteridrift og fravær af de eksplicitte undtagelser; værktøjet viser førsteårs-effekt og gør opmærksom på, at 108 % ikke nødvendigvis giver størst fradrag i købsåret. Status: **bestået efter migration og rettelse**.
+- **Affiliate-status:** tidligere kode indeholdt et Dinero-reklamelink og beskrev samarbejdet som aktivt, før godkendelsen var dokumenteret. Link og påstand er fjernet, og release-gates kræver nu pre-approval-status uden Partner-Ads-links. Status: **rettet 2026-08-17**.
 - **Google:** Search Console-verifikation bevares i `index.html`; sitemap valideres lokalt og efter deploy. Status: **bestået i kode; offentlig efter-deploy-gate kræves ved hver release**.
 
 ## 7. Fortsat auditregel
