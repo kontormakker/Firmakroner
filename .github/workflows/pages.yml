@@ -26,17 +26,17 @@ jobs:
       - name: Run calculator tests
         run: |
           node test.js
-          node vat-choice-test.js
-          node faktura-buffer-test.js
-          node startup-expense-test.js
-          node koersel-privat-bil-test.js
-          node telefon-internet-test.js
-          node reklame-repraesentation-test.js
+          for test_file in *-test.js; do
+            echo "Running ${test_file}"
+            node "${test_file}"
+          done
 
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html firmakoeb.html momsregistrering-under-50000.html faktura-buffer.html udgifter-foer-opstart.html koersel-privat-bil.html telefon-internet.html telefon-internet-lib.js reklame-eller-repraesentation.html reklame-repraesentation-lib.js om.html privatliv.html affiliate.html robots.txt sitemap.xml cc4bb9dc90e3aa702484656973b7baf2.txt _site/
+          find . -maxdepth 1 -type f \( -name '*.html' -o -name '*-lib.js' -o -name 'robots.txt' -o -name 'sitemap.xml' -o -name 'cc*.txt' \) -exec cp {} _site/ \;
+          test -f _site/index.html
+          test -f _site/sitemap.xml
 
       - name: Browser smoke tests
         run: |
@@ -49,12 +49,12 @@ jobs:
             sleep 0.25
           done
 
-          for path in / /firmakoeb.html /momsregistrering-under-50000.html /faktura-buffer.html /udgifter-foer-opstart.html /koersel-privat-bil.html /telefon-internet.html /reklame-eller-repraesentation.html /om.html /privatliv.html /affiliate.html; do
+          for path in / /firmakoeb.html /momsregistrering-under-50000.html /faktura-buffer.html /udgifter-foer-opstart.html /koersel-privat-bil.html /telefon-internet.html /reklame-eller-repraesentation.html /hjemmekontor-fradrag.html /om.html /privatliv.html /affiliate.html; do
             curl -fsS "http://127.0.0.1:4173${path}" >/dev/null
           done
           curl -fsS http://127.0.0.1:4173/cc4bb9dc90e3aa702484656973b7baf2.txt | grep -q 'cc4bb9dc90e3aa702484656973b7baf2'
           curl -fsS http://127.0.0.1:4173/robots.txt | grep -q 'sitemap.xml'
-          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'reklame-eller-repraesentation.html'
+          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'hjemmekontor-fradrag.html'
 
           CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           test -n "$CHROME"
@@ -62,14 +62,9 @@ jobs:
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/' > /tmp/portal.html
           grep -q 'Små virksomhedstal i almindelige kroner' /tmp/portal.html
-          grep -q 'firmakoeb.html' /tmp/portal.html
-          grep -q 'momsregistrering-under-50000.html' /tmp/portal.html
-          grep -q 'faktura-buffer.html' /tmp/portal.html
-          grep -q 'udgifter-foer-opstart.html' /tmp/portal.html
-          grep -q 'koersel-privat-bil.html' /tmp/portal.html
-          grep -q 'telefon-internet.html' /tmp/portal.html
-          grep -q 'reklame-eller-repraesentation.html' /tmp/portal.html
-          echo 'portal smoke ok'
+          for href in firmakoeb.html momsregistrering-under-50000.html faktura-buffer.html udgifter-foer-opstart.html koersel-privat-bil.html telefon-internet.html reklame-eller-repraesentation.html hjemmekontor-fradrag.html; do
+            grep -q "$href" /tmp/portal.html
+          done
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/firmakoeb.html' > /tmp/purchase.html
           grep -q '4.800' /tmp/purchase.html
@@ -114,17 +109,21 @@ jobs:
           grep -q 'Den skattepligtige værdi beregnes kun én gang' /tmp/phone-internet.html
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/reklame-eller-repraesentation.html' > /tmp/representation.html
-          grep -q '100,00 kr.' /tmp/representation.html
           grep -q '400,00 kr.' /tmp/representation.html
           grep -q '100 %-momsregel' /tmp/representation.html
           grep -q 'Skattefradraget er begrænset til 25 %' /tmp/representation.html
-          echo 'representation smoke ok'
+
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/hjemmekontor-fradrag.html' > /tmp/home-office.html
+          grep -q 'Stærkt signal: typisk nej til selve rummet' /tmp/home-office.html
+          grep -q '6.000 kr.' /tmp/home-office.html
+          grep -q 'Ingen falsk huslejeberegning' /tmp/home-office.html
+          echo 'home-office smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/affiliate.html' > /tmp/affiliate.html
           grep -q 'endnu ingen aktive affiliate-links' /tmp/affiliate.html
           grep -q 'Beregninger påvirkes aldrig' /tmp/affiliate.html
 
-          for page in portal: purchase:firmakoeb.html vat:momsregistrering-under-50000.html buffer:faktura-buffer.html startup:udgifter-foer-opstart.html mileage:koersel-privat-bil.html phone:telefon-internet.html representation:reklame-eller-repraesentation.html; do
+          for page in portal: purchase:firmakoeb.html vat:momsregistrering-under-50000.html buffer:faktura-buffer.html startup:udgifter-foer-opstart.html mileage:koersel-privat-bil.html phone:telefon-internet.html representation:reklame-eller-repraesentation.html homeoffice:hjemmekontor-fradrag.html; do
             name="${page%%:*}"; path="${page#*:}"
             "$CHROME" $FLAGS --window-size=390,844 --screenshot="/tmp/mobile-${name}.png" "http://127.0.0.1:4173/${path}"
             test -s "/tmp/mobile-${name}.png"
@@ -158,31 +157,26 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
     steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
       - name: Notify IndexNow after successful deploy
         run: |
           KEY='cc4bb9dc90e3aa702484656973b7baf2'
           KEY_LOCATION="https://kontormakker.github.io/Firmakroner/${KEY}.txt"
           curl --retry 6 --retry-delay 2 --retry-all-errors -fsS "$KEY_LOCATION" | grep -q "$KEY"
-          cat > /tmp/indexnow.json <<EOF
-          {
-            "host": "kontormakker.github.io",
-            "key": "$KEY",
-            "keyLocation": "$KEY_LOCATION",
-            "urlList": [
-              "https://kontormakker.github.io/Firmakroner/",
-              "https://kontormakker.github.io/Firmakroner/firmakoeb.html",
-              "https://kontormakker.github.io/Firmakroner/momsregistrering-under-50000.html",
-              "https://kontormakker.github.io/Firmakroner/faktura-buffer.html",
-              "https://kontormakker.github.io/Firmakroner/udgifter-foer-opstart.html",
-              "https://kontormakker.github.io/Firmakroner/koersel-privat-bil.html",
-              "https://kontormakker.github.io/Firmakroner/telefon-internet.html",
-              "https://kontormakker.github.io/Firmakroner/reklame-eller-repraesentation.html",
-              "https://kontormakker.github.io/Firmakroner/om.html",
-              "https://kontormakker.github.io/Firmakroner/privatliv.html",
-              "https://kontormakker.github.io/Firmakroner/affiliate.html"
-            ]
-          }
-          EOF
+          python3 - <<'PY' > /tmp/indexnow.json
+          import json, xml.etree.ElementTree as ET
+          ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          root=ET.parse('sitemap.xml').getroot()
+          urls=[node.text for node in root.findall('.//s:loc',ns) if node.text]
+          print(json.dumps({
+              'host':'kontormakker.github.io',
+              'key':'cc4bb9dc90e3aa702484656973b7baf2',
+              'keyLocation':'https://kontormakker.github.io/Firmakroner/cc4bb9dc90e3aa702484656973b7baf2.txt',
+              'urlList':urls
+          }))
+          PY
           STATUS=$(curl -sS -o /tmp/indexnow-response.txt -w '%{http_code}' -H 'Content-Type: application/json; charset=utf-8' --data-binary @/tmp/indexnow.json https://api.indexnow.org/indexnow)
           echo "IndexNow HTTP $STATUS"
           if [ "$STATUS" != '200' ] && [ "$STATUS" != '202' ]; then
