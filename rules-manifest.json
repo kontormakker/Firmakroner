@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "policy": {
     "primarySourcesOnlyForFinalRules": true,
-    "reviewedAt": "2026-08-16",
+    "reviewedAt": "2026-08-17",
     "nextFullReviewNoLaterThan": "2027-01-01",
     "note": "A passing date is not proof that a rule is unchanged. This manifest prevents year-specific rules from silently being carried into the next year without a deliberate re-audit."
   },
@@ -22,6 +22,7 @@
     "skal-jeg-bogfoere-digitalt-2026.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["erhvervsstyrelsen.dk","virksomhedsguiden.dk"]},
     "hobby-eller-erhverv.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
     "pmv-eller-enkeltmandsvirksomhed.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk","virksomhedsguiden.dk"]},
+    "skjul-hjemmeadresse-cvr.html": {"risk":"medium","rateSensitive":false,"reviewedAt":"2026-08-17","reviewAfter":"2026-12-31","sources":["erhvervsstyrelsen.dk","virksomhedsguiden.dk","datatilsynet.dk"]},
     "satser-2026.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk","info.skat.dk"]}
   }
 }
