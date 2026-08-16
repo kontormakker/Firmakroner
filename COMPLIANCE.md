@@ -6,7 +6,7 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 
 ## 1. Kilder og faglig korrekthed
 
-- Juridiske, skatte-, moms- og bogføringsmæssige påstande skal som udgangspunkt bygge på primære officielle kilder: SKAT/Skattestyrelsen, Den juridiske vejledning, Erhvervsstyrelsen eller Virksomhedsguiden.
+- Juridiske, skatte-, moms-, CVR- og bogføringsmæssige påstande skal som udgangspunkt bygge på primære officielle kilder: SKAT/Skattestyrelsen, Den juridiske vejledning, Erhvervsstyrelsen, Virk, Datatilsynet eller Virksomhedsguiden.
 - Blogs, regnskabsprogrammer og andre kommercielle sider må bruges til at opdage spørgsmål, men ikke som autoritativt facit for en regel.
 - Årstal, beløbsgrænser, satser og perioder skal angives med deres præcise scope.
 - Hvis officielle sider ser indbyrdes inkonsistente eller forældede ud, skal værktøjet afgrænses til den regel, der kan dokumenteres sikkert. Den aktuelle lov/Den juridiske vejledning og nyere officiel vejledning vægtes højest.
@@ -31,6 +31,7 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 - Affiliateprovision må aldrig påvirke beregningsresultater, kriterier, officielle kilder eller en faglig konklusion.
 - Et affiliate-link vises kun i en kontekst, hvor tjenesten er relevant for det spørgsmål, brugeren undersøger.
 - Der må ikke stå eller antydes, at en bestemt kommerciel tjeneste er obligatorisk, hvis flere lovlige løsninger findes.
+- Gratis myndighedsløsninger vises før en betalt løsning, når de løser brugerens problem. CVR-adresseværktøjet har derfor ingen kommerciel adressehenvisning, mens gratis reklamebeskyttelse og Google-indstillinger vises først.
 - `affiliate.html`, `privatliv.html`, browser-smoke og compliance-test skal holdes synkroniseret med den faktiske implementering.
 
 ## 4. Privatliv
@@ -57,6 +58,7 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 - **Udgifter før opstart, hjemmekontor, kurser, arbejdstøj, udenlandsk SaaS, fakturakrav og hobby/erhverv:** afgrænsninger og primære kilder er dobbelttjekket. **Bestået.**
 - **Digital bogføring 2026:** over 300.000 kr. i to på hinanden følgende forudgående indkomstår; præcis 300.000 kr. er ikke over; nye virksomheder kan tidligst rammes fra tredje indkomstår. **Bestået.**
 - **Firmakøb 2026:** 36.000-kr.-grænsen anvendes på faktisk omkostningsgrundlag efter det momsfradrag, brugeren angiver, så ikke-fradraget moms forbliver i anskaffelsessummen. Blandet brug stopper skatteestimatet og viser 16.900-kr.-særgrænsen. 108 %-saldoen er betinget og viser førsteårs-effekt. **Bestået efter migration og rettelse.**
+- **CVR hjemmeadresse:** Erhvervsstyrelsen bekræfter, at CVR indeholder navn og adresse, Virk og Datatilsynet præciserer, at en CPR-beskyttet privatadresse kan skjules som personoplysning, men at en virksomhedsadresse skal offentliggøres også når den er identisk med den beskyttede bopæl. CVR-reklamebeskyttelse begrænser brug af CVR-grunddata til direkte markedsføring, men skjuler ikke adressen; for personligt ejede virksomheder kan Robinsonlisten supplere. Google-adressevisning er en separat platformindstilling og ændrer ikke CVR. **Bestået mod officielle kilder 17. august 2026.**
 - **Dinero affiliate:** det udstedte Partner-Ads-link er tilgængeligt efter programgodkendelsen og vises kun kontekstuelt på digital-bogføringssiden med tydelig reklamemarkering. Dinero beskrives som ét af flere registrerede bogføringssystemer. **Bestået.**
 - **Google:** Search Console-verifikation bevares i `index.html`; sitemap valideres lokalt og efter deploy. **Bestået i kode; offentlig efter-deploy-gate kræves ved hver release.**
 
