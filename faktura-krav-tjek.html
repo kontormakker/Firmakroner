@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Er din faktura korrekt? Tjek fakturakravene — FirmaKroner</title>
+<meta name="description" content="Tjek en almindelig dansk B2B-faktura mod SKATs krav. Se om du kan bruge en forenklet faktura under 3.000 kr., og hvilke oplysninger der mangler.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://kontormakker.github.io/Firmakroner/faktura-krav-tjek.html">
+<meta name="theme-color" content="#173c2a">
+<style>
+:root{--bg:#f4f5f1;--card:#fff;--text:#162019;--muted:#667069;--line:#dfe4dd;--soft:#e8efe9;--amber:#fff5d8;--red:#fff0ed}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}a{color:inherit}.wrap{max-width:1040px;margin:auto;padding:24px 18px 64px}.nav{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:42px}.brand{font-size:21px;font-weight:900;letter-spacing:-.04em;text-decoration:none}.back{font-size:13px;color:var(--muted)}.pill{font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:#50705c;margin-bottom:10px}h1{font-size:clamp(38px,7vw,65px);line-height:.98;letter-spacing:-.055em;margin:0 0 16px}.lead{font-size:18px;line-height:1.6;color:var(--muted);max-width:820px;margin:0 0 30px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}.card h2{font-size:20px;letter-spacing:-.03em;margin:0 0 18px}.field{margin-bottom:15px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.field small{display:block;color:var(--muted);font-size:12px;line-height:1.5;margin-top:6px}input[type=number]{width:100%;padding:12px 13px;border:1px solid #cfd6cf;border-radius:11px;background:#fff;font:inherit}.check{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:9px}.check input{margin-top:3px}.check span{font-size:13px;line-height:1.45}.status{padding:15px;border-radius:14px;background:var(--soft);font-size:13px;line-height:1.6;margin-bottom:12px}.status strong{font-size:19px;display:block;margin-bottom:5px}.status.stop{background:var(--red);color:#633128}.missing{display:grid;gap:8px}.miss{padding:10px 12px;background:#fff5d8;border-radius:11px;font-size:13px}.ok{padding:13px;border-radius:12px;background:#edf6ef;font-size:13px;font-weight:800}.note{padding:14px;border-radius:14px;background:#f8f9f6;border:1px solid var(--line);font-size:12px;line-height:1.6;margin-top:12px}.source{border-top:1px solid var(--line);padding-top:18px;margin-top:25px;color:var(--muted);font-size:12px;line-height:1.75}.source a{text-decoration:underline}.footer{border-top:1px solid var(--line);padding-top:18px;margin-top:38px;color:var(--muted);font-size:12px;line-height:1.6}@media(max-width:760px){.grid{grid-template-columns:1fr}.nav{align-items:flex-start}h1{font-size:44px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<nav class="nav"><a class="brand" href="./">FirmaKroner</a><a class="back" href="./">← Alle værktøjer</a></nav>
+<div class="pill">Værktøj 12 · Faktura</div>
+<h1>Er din B2B-faktura klar til at blive sendt?</h1>
+<p class="lead">Sæt flueben ved det, din faktura faktisk indeholder. FirmaKroner vælger mellem fuld og forenklet faktura i den almindelige danske B2B-case og viser præcis, hvilke lovpligtige oplysninger der mangler.</p>
+<section class="grid">
+<div class="card">
+<h2>Hvilken faktura er det?</h2>
+<div class="field"><label for="amount">Fakturabeløb inkl. moms</label><input id="amount" type="number" min="0" step="10" value="2500"><small>Under 3.000 kr. kan en forenklet faktura bruges i visse almindelige B2B-salg.</small></div>
+<label class="check"><input id="buyerRegistered" type="checkbox" checked><span><b>Kunden er en dansk momsregistreret virksomhed</b><br>Denne version er målrettet almindeligt dansk B2B-salg.</span></label>
+<label class="check"><input id="buyerRequestsFull" type="checkbox"><span><b>Kunden har bedt om en fuld faktura</b><br>Så skal der udstedes en fuld faktura, selv hvis beløbet ellers kunne være omfattet af den forenklede regel.</span></label>
+<label class="check"><input id="normalDomestic" type="checkbox" checked><span><b>Det er et almindeligt indenlandsk salg</b><br>Ikke EU-leverance, fjernsalg eller anden særregel.</span></label>
+<label class="check"><input id="deliveryDifferent" type="checkbox"><span><b>Leveringsdatoen er forskellig fra fakturadatoen</b></span></label>
+<h2 style="margin-top:26px">Hvad står allerede på fakturaen?</h2>
+<div id="fieldChecks"></div>
+</div>
+<div class="card">
+<h2>Resultat</h2>
+<div id="status" class="status"></div>
+<div id="missing" class="missing"></div>
+<div class="note"><b>Forenklet betyder ikke “bare beløb og CVR”.</b> Der er stadig krav om bl.a. dato, fortløbende nummer, sælgeroplysninger, hvad der er leveret og oplysninger om moms. På en fuld faktura skal momsbeløbet og momssatsen vises selvstændigt.</div>
+</div>
+</section>
+<div class="source"><b>Kilder og afgrænsning.</b> SKATs bogføringsvejledning oplister kravene til en fuld moms-faktura. Den juridiske vejledning beskriver, at en forenklet faktura kan bruges ved salg under 3.000 kr. til en anden registreret virksomhed, med færre oplysningskrav, men at kunden kan kræve en fuld faktura. På fulde fakturaer må man ikke nøjes med at skrive, at momsen udgør 20 % af beløbet inkl. moms; momssats og momsbeløb skal fremgå selvstændigt. <a href="https://skat.dk/erhverv/egen-virksomhed/bogfoering-regnskab-og-oplysningsskema/bogfoering" rel="noopener">SKAT om bogføring og fakturaer</a> · <a href="https://info.skat.dk/data.aspx?oid=2068789" rel="noopener">Fuld faktura</a> · <a href="https://info.skat.dk/data.aspx?oid=2068791" rel="noopener">Forenklet faktura</a>. Denne version klassificerer ikke salg til private eller særlige grænseoverskridende fakturaer.</div>
+<footer class="footer">FirmaKroner er et screenings- og beregningsværktøj — ikke skatte-, revisions- eller juridisk rådgivning.</footer>
+</main>
+<script src="faktura-tjek-lib.js"></script>
+<script>
+const labels={
+ date:'Fakturadato',number:'Fortløbende fakturanummer',seller:'Sælgers navn og adresse',sellerVat:'Sælgers CVR-/SE-nummer',buyer:'Kundens navn og adresse',description:'Varens/ydelsens art og mængde/omfang',delivery:'Leveringsdato, hvis den er forskellig fra fakturadato',base:'Momsgrundlag og pris pr. enhed uden moms samt relevante rabatter',rate:'Momssats',vatAmount:'Momsbeløb',simpleTotalVat:'Samlet omsætningsbeløb og momsbeløb (eller oplysninger til at beregne momsen)'
+};
+const defaults={date:true,number:true,seller:true,sellerVat:true,buyer:false,description:true,delivery:false,base:false,rate:false,vatAmount:false,simpleTotalVat:true};
+const box=document.getElementById('fieldChecks');
+Object.entries(labels).forEach(([key,label])=>{const el=document.createElement('label');el.className='check';el.dataset.key=key;el.innerHTML='<input id="f_'+key+'" type="checkbox" '+(defaults[key]?'checked':'')+'><span>'+label+'</span>';box.appendChild(el);});
+function render(){
+ const fields={};Object.keys(labels).forEach(k=>fields[k]=document.getElementById('f_'+k).checked);
+ const r=FirmaKronerInvoiceCheck.check({amount:document.getElementById('amount').value,buyerRegistered:document.getElementById('buyerRegistered').checked,buyerRequestsFull:document.getElementById('buyerRequestsFull').checked,normalDomestic:document.getElementById('normalDomestic').checked,deliveryDifferent:document.getElementById('deliveryDifferent').checked,fields});
+ const status=document.getElementById('status'),missing=document.getElementById('missing');
+ if(!r.supported){status.className='status stop';status.innerHTML='<strong>Stop: denne case er uden for tjekkeren</strong>'+r.reason;missing.innerHTML='';Object.values(box.children).forEach(()=>{});return;}
+ status.className='status';status.innerHTML='<strong>'+(r.simplified?'Forenklet faktura kan bruges i dette scenario':'Fuld faktura kræves i dette scenario')+'</strong>'+(r.simplified?'Beløbet er under 3.000 kr., kunden er momsregistreret, og kunden har ikke bedt om en fuld faktura.':'Tjek kravene til en fuld faktura nedenfor.');
+ const required=new Set(r.required);
+ [...box.children].forEach(label=>{const key=label.dataset.key;label.style.display=required.has(labels[key])?'flex':'none';});
+ if(r.complete) missing.innerHTML='<div class="ok">✓ De nødvendige felter i denne afgrænsede case er markeret som til stede.</div>';
+ else missing.innerHTML='<div style="font-size:12px;color:#667069;margin:4px 0 2px"><b>Mangler:</b></div>'+r.missing.map(x=>'<div class="miss">'+x+'</div>').join('');
+}
+['amount','buyerRegistered','buyerRequestsFull','normalDomestic','deliveryDifferent'].forEach(id=>document.getElementById(id).addEventListener('input',render));Object.keys(labels).forEach(k=>document.getElementById('f_'+k).addEventListener('input',render));render();
+</script>
+</body>
+</html>
