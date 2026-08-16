@@ -129,7 +129,7 @@ jobs:
           assert 'google-site-verification' in home, 'Search Console verification missing from live homepage'
           digital=fetch('https://kontormakker.github.io/Firmakroner/skal-jeg-bogfoere-digitalt-2026.html')
           assert 'Reklame · reklamelink for Dinero' in digital, 'Dinero disclosure missing live'
-          assert 'affiliateConsent' in digital and 'data-affiliate-url' in digital, 'affiliate consent gate missing live'
+          assert 'partnerConsent' in digital and 'data-affiliate-url' in digital, 'affiliate consent gate missing live'
           cvr=fetch('https://kontormakker.github.io/Firmakroner/skjul-hjemmeadresse-cvr.html')
           assert 'virksomhedsadresser altid skal offentliggøres' in cvr, 'CVR publication guard missing live'
           print(f'live-page-gate: {len(urls)} sitemap pages returned 200 with canonical; critical markers present')
