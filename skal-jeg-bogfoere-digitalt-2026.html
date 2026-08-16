@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skal jeg bogføre digitalt i 2026? | FirmaKroner</title>
+<meta name="description" content="Tjek om din personligt ejede virksomhed rammer 2026-kravet om digital bogføring ud fra virksomhedens startår og faktiske nettoomsætning i 2024 og 2025.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://kontormakker.github.io/Firmakroner/skal-jeg-bogfoere-digitalt-2026.html">
+<meta name="theme-color" content="#173c2a">
+<style>
+:root{--bg:#f4f5f1;--card:#fff;--text:#162019;--muted:#667069;--line:#dfe4dd;--soft:#e8efe9;--amber:#fff5d8;--red:#fff0ed}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}a{color:inherit}.wrap{max-width:980px;margin:auto;padding:24px 18px 64px}.nav{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:42px}.brand{font-size:21px;font-weight:900;letter-spacing:-.04em;text-decoration:none}.back{font-size:13px;color:var(--muted)}.pill{font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:#50705c;margin-bottom:10px}h1{font-size:clamp(38px,7vw,65px);line-height:.98;letter-spacing:-.055em;margin:0 0 16px}.lead{font-size:18px;line-height:1.6;color:var(--muted);max-width:800px;margin:0 0 30px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}.card h2{font-size:20px;letter-spacing:-.03em;margin:0 0 18px}.field{margin-bottom:16px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.field small{display:block;color:var(--muted);font-size:12px;line-height:1.5;margin-top:6px}input[type=number],select{width:100%;padding:12px 13px;border:1px solid #cfd6cf;border-radius:11px;background:#fff;font:inherit}.check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px}.check input{margin-top:3px}.check span{font-size:13px;line-height:1.5}.status{border-radius:14px;padding:16px;background:var(--soft);font-size:13px;line-height:1.6}.status strong{display:block;font-size:20px;margin-bottom:5px}.status.warn{background:var(--amber);color:#574a1f}.status.stop{background:var(--red);color:#633128}.years{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}.year{padding:13px;border:1px solid var(--line);border-radius:13px}.year b{font-size:12px;color:var(--muted)}.year strong{display:block;font-size:23px;margin-top:4px}.note{padding:14px;border-radius:14px;background:#f8f9f6;border:1px solid var(--line);font-size:12px;line-height:1.6;margin-top:12px}.source{border-top:1px solid var(--line);padding-top:18px;margin-top:25px;color:var(--muted);font-size:12px;line-height:1.75}.source a{text-decoration:underline}.footer{border-top:1px solid var(--line);padding-top:18px;margin-top:38px;color:var(--muted);font-size:12px}@media(max-width:760px){.grid{grid-template-columns:1fr}.nav{align-items:flex-start}h1{font-size:44px}}@media(max-width:420px){.years{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<nav class="nav"><a class="brand" href="./">FirmaKroner</a><a class="back" href="./">← Alle værktøjer</a></nav>
+<div class="pill">Værktøj 13 · Digital bogføring</div>
+<h1>Skal din enkeltmandsvirksomhed bogføre digitalt i 2026?</h1>
+<p class="lead">Fra 2026 rammer kravet også mange personligt ejede virksomheder. Det afgørende er ikke din forventede omsætning i år, men den faktiske nettoomsætning i de to foregående indkomstår.</p>
+<section class="grid">
+<div class="card">
+<h2>Dine oplysninger</h2>
+<label class="check"><input id="personOwned" type="checkbox" checked><span><b>Virksomheden er personligt ejet</b><br>Fx enkeltmandsvirksomhed. Selskaber følger andre ikrafttrædelsesregler og stoppes derfor af denne checker.</span></label>
+<div class="field"><label for="startYear">Hvornår startede virksomheden?</label><select id="startYear"><option value="2023">2023 eller tidligere</option><option value="2024" selected>2024</option><option value="2025">2025</option><option value="2026">2026</option></select><small>Et første, kort indkomstår tæller også. En virksomhed startet 1. marts 2024 kan derfor have 2024 som første indkomstår.</small></div>
+<div class="field"><label for="turnover2024">Faktisk nettoomsætning i 2024</label><input id="turnover2024" type="number" min="0" step="1000" value="350000"></div>
+<div class="field"><label for="turnover2025">Faktisk nettoomsætning i 2025</label><input id="turnover2025" type="number" min="0" step="1000" value="400000"></div>
+</div>
+<div class="card">
+<h2>Resultat</h2>
+<div id="status" class="status"></div>
+<div class="years"><div class="year"><b>2024</b><strong id="y2024">350.000 kr.</strong><span id="s2024"></span></div><div class="year"><b>2025</b><strong id="y2025">400.000 kr.</strong><span id="s2025"></span></div></div>
+<div class="note"><b>Grænsen er “over 300.000 kr.” i begge år.</b> 300.000 kr. præcis er derfor ikke nok til at udløse kravet via omsætningsgrænsen. Hvis du bliver omfattet, skal transaktioner og relevante bilag håndteres i et digitalt bogføringssystem, der opfylder bogføringslovens krav.</div>
+</div>
+</section>
+<div class="source"><b>Kilder og afgrænsning.</b> Erhvervsstyrelsen oplyser, at personligt ejede virksomheder fra 1. januar 2026 skal bogføre digitalt, når nettoomsætningen har oversteget 300.000 kr. om året i de to foregående indkomstår. For eksisterende virksomheder er det typisk 2024 og 2025, der afgør 2026. En ny virksomhed bliver ikke omfattet ved stiftelsen og kan tidligst rammes fra starten af sit tredje indkomstår. <a href="https://erhvervsstyrelsen.dk/vejledning-bogfoeringsloven" rel="noopener">Erhvervsstyrelsens vejledning</a> · <a href="https://virksomhedsguiden.dk/content/temaer/optimer-din-forretning/ydelser/hvad-betyder-krav-om-digital-bogfoering-for-din-virksomhed/6188ca93-f0f6-4456-abc2-b7a16c7fa833/" rel="noopener">Virksomhedsguiden</a>. Denne checker tager ikke stilling til selskaber, foreninger eller særlige regnskabsperioder.</div>
+<footer class="footer">FirmaKroner er et screenings- og beregningsværktøj — ikke regnskabs-, revisions- eller juridisk rådgivning.</footer>
+</main>
+<script src="digital-bogfoering-lib.js"></script>
+<script>
+const fmt=n=>new Intl.NumberFormat('da-DK',{maximumFractionDigits:0}).format(Math.round(n))+' kr.';
+function render(){
+ const r=FirmaKronerDigitalBooks.assess({startYear:document.getElementById('startYear').value,turnover2024:document.getElementById('turnover2024').value,turnover2025:document.getElementById('turnover2025').value,personOwned:document.getElementById('personOwned').checked});
+ const s=document.getElementById('status');
+ if(!r.supported){s.className='status stop';s.innerHTML='<strong>Uden for denne checker</strong>'+r.reason;}
+ else if(r.status==='required'){s.className='status';s.innerHTML='<strong>Ja — omsætningsreglen rammer dig i 2026</strong>'+r.reason;}
+ else if(r.status==='not-yet'){s.className='status warn';s.innerHTML='<strong>Ikke endnu i 2026</strong>'+r.reason;}
+ else{s.className='status';s.innerHTML='<strong>Nej — ikke via omsætningsgrænsen i 2026</strong>'+r.reason;}
+ const y24=Number(document.getElementById('turnover2024').value)||0,y25=Number(document.getElementById('turnover2025').value)||0;
+ document.getElementById('y2024').textContent=fmt(Math.max(0,y24));document.getElementById('y2025').textContent=fmt(Math.max(0,y25));
+ document.getElementById('s2024').textContent=y24>300000?'Over grænsen':'Ikke over grænsen';document.getElementById('s2025').textContent=y25>300000?'Over grænsen':'Ikke over grænsen';
+}
+['personOwned','startYear','turnover2024','turnover2025'].forEach(id=>document.getElementById(id).addEventListener('input',render));render();
+</script>
+</body>
+</html>
