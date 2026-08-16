@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arbejdstøj som selvstændig — kan det trækkes fra? | FirmaKroner</title>
+<meta name="description" content="Tjek forsigtigt om dit arbejdstøj ligner fradragsberettiget specialbeklædning, og beregn kun den dokumenterede merudgift i stedet for automatisk at love fradrag for hele tøjet.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://kontormakker.github.io/Firmakroner/arbejdstoej-fradrag.html">
+<meta name="theme-color" content="#173c2a">
+<style>
+:root{--bg:#f4f5f1;--card:#fff;--text:#162019;--muted:#667069;--line:#dfe4dd;--soft:#e8efe9;--amber:#fff5d8}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}a{color:inherit}.wrap{max-width:980px;margin:auto;padding:24px 18px 64px}.nav{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:42px}.brand{font-size:21px;font-weight:900;letter-spacing:-.04em;text-decoration:none}.back{font-size:13px;color:var(--muted)}.pill{font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:#50705c;margin-bottom:10px}h1{font-size:clamp(38px,7vw,65px);line-height:.98;letter-spacing:-.055em;margin:0 0 16px}.lead{font-size:18px;line-height:1.6;color:var(--muted);max-width:800px;margin:0 0 30px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}.card h2{font-size:20px;letter-spacing:-.03em;margin:0 0 18px}.field{margin-bottom:16px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.field small{display:block;color:var(--muted);font-size:12px;line-height:1.5;margin-top:6px}input[type=number]{width:100%;padding:12px 13px;border:1px solid #cfd6cf;border-radius:11px;background:#fff;font:inherit}.check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px}.check input{margin-top:3px}.check span{font-size:13px;line-height:1.5}.status{border-radius:14px;padding:16px;background:var(--soft);font-size:13px;line-height:1.6;margin-bottom:12px}.status strong{display:block;font-size:19px;margin-bottom:5px}.metric{padding:14px;border:1px solid var(--line);border-radius:14px}.metric b{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}.metric strong{font-size:28px;letter-spacing:-.04em}.warn{margin-top:12px;border-radius:14px;background:var(--amber);padding:14px;font-size:12px;line-height:1.6;color:#574a1f}.source{border-top:1px solid var(--line);padding-top:18px;margin-top:25px;color:var(--muted);font-size:12px;line-height:1.7}.source a{text-decoration:underline}.footer{border-top:1px solid var(--line);padding-top:18px;margin-top:38px;color:var(--muted);font-size:12px;line-height:1.6}@media(max-width:760px){.grid{grid-template-columns:1fr}.nav{align-items:flex-start}h1{font-size:44px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<nav class="nav"><a class="brand" href="./">FirmaKroner</a><a class="back" href="./">← Alle værktøjer</a></nav>
+<div class="pill">Værktøj 10 · Arbejdstøj</div>
+<h1>“Jeg bruger det på arbejde” er ikke nok.</h1>
+<p class="lead">Tøj er som udgangspunkt privat. For selvstændige peger Den juridiske vejledning på to centrale betingelser for fradrag: det skal være specialbeklædning, der ikke egner sig privat, og arbejdet skal give dig en reel merudgift, selv når besparelsen på almindeligt tøj regnes med.</p>
+<section class="grid">
+<div class="card">
+<h2>Dine forudsætninger</h2>
+<div class="field"><label for="cost">Samlet pris på tøjet</label><input id="cost" type="number" min="0" step="100" value="6000"></div>
+<label class="check"><input id="special" type="checkbox" checked><span><b>Det er specialbeklædning til arbejdet</b><br>Fx tydelig uniform, sikkerhedsbeklædning eller andet tøj med en karakter, som adskiller sig fra almindelig privat påklædning.</span></label>
+<label class="check"><input id="privateSuitable" type="checkbox"><span><b>Tøjet egner sig også til normal privat brug</b><br>Hvis ja, taler reglerne stærkt imod fradrag — også selv om du personligt aldrig ville bruge det privat.</span></label>
+<div class="field"><label for="extraCost">Din dokumenterbare merudgift efter besparelsen på almindeligt tøj</label><input id="extraCost" type="number" min="0" step="100" value="4000"><small>Det er ikke nødvendigvis hele købsprisen. Reglerne ser på merudgiften ved det særlige arbejdstøj.</small></div>
+<label class="check"><input id="documented" type="checkbox" checked><span><b>Jeg har bilag og kan dokumentere merudgiften</b></span></label>
+</div>
+<div class="card">
+<h2>Resultat</h2>
+<div id="status" class="status"></div>
+<div class="metric"><b>Beløb værktøjet tør vise som muligt skattemæssigt fradrag</b><strong id="deduction">4.000 kr.</strong></div>
+<div class="warn"><b>Moms er en separat vurdering.</b> SKAT har særskilte momsregler for arbejdstøj og uniformer, som tilhører virksomheden og bruges i arbejdet, og udelukker tøj der også kan bruges privat. FirmaKroner blander ikke automatisk den momsvurdering ind i det skattemæssige merudgiftsregnestykke.</div>
+</div>
+</section>
+<div class="source"><b>Kilder og afgrænsning.</b> Den juridiske vejledning siger, at tøj som udgangspunkt er privat, men at en selvstændig kan fratrække merudgifter til specialbeklædning, når den ikke er egnet til privat brug, og der stadig er en merudgift efter besparelsen på almindeligt tøj. SKATs momsvejledning siger samtidig, at arbejdstøj og uniformer kan give momsfradrag, mens tøj der også kan bruges privat ikke gør. <a href="https://info.skat.dk/data.aspx?oid=2083470" rel="noopener">Den juridiske vejledning</a> · <a href="https://skat.dk/erhverv/moms/fradrag-for-moms/udgifter-du-kan-faa-momsfradrag-for/fradrag-for-moms-af-faste-udgifter" rel="noopener">SKAT om momsfradrag</a>.</div>
+<footer class="footer">FirmaKroner er et screenings- og beregningsværktøj — ikke skatte-, revisions- eller juridisk rådgivning.</footer>
+</main>
+<script src="arbejdstoej-lib.js"></script>
+<script>
+const fmt=n=>new Intl.NumberFormat('da-DK',{maximumFractionDigits:0}).format(Math.round(n))+' kr.';
+function render(){
+ const r=FirmaKronerWorkwear.assess({cost:document.getElementById('cost').value,special:document.getElementById('special').checked,privateSuitable:document.getElementById('privateSuitable').checked,extraCost:document.getElementById('extraCost').value,documented:document.getElementById('documented').checked});
+ const labels={possible:'Muligt fradrag — betingelserne ser relevante ud',no:'Stærkt signal: nej',uncertain:'Kræver konkret vurdering'};
+ document.getElementById('status').innerHTML='<strong>'+labels[r.status]+'</strong>'+r.reason;
+ document.getElementById('deduction').textContent=r.deductible===null?'—':fmt(r.deductible);
+}
+['cost','special','privateSuitable','extraCost','documented'].forEach(id=>document.getElementById(id).addEventListener('input',render));render();
+</script>
+</body>
+</html>
