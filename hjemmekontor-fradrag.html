@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hjemmekontor som selvstændig — kan du få fradrag? | FirmaKroner</title>
+<meta name="description" content="Tjek forsigtigt om dit hjemmekontor ligner en sjælden fradragsberettiget arbejdsværelse-case, og beregn separat fradragsandelen for skrivebord og kontorinventar.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://kontormakker.github.io/Firmakroner/hjemmekontor-fradrag.html">
+<meta name="theme-color" content="#173c2a">
+<style>
+:root{--bg:#f4f5f1;--card:#fff;--text:#162019;--muted:#667069;--line:#dfe4dd;--soft:#e8efe9;--amber:#fff5d8}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}a{color:inherit}.wrap{max-width:980px;margin:auto;padding:24px 18px 64px}.nav{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:42px}.brand{font-size:21px;font-weight:900;letter-spacing:-.04em;text-decoration:none}.back{font-size:13px;color:var(--muted)}.pill{font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:#50705c;margin-bottom:10px}h1{font-size:clamp(38px,7vw,65px);line-height:.98;letter-spacing:-.055em;margin:0 0 16px}.lead{font-size:18px;line-height:1.6;color:var(--muted);max-width:790px;margin:0 0 30px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}.card h2{font-size:20px;letter-spacing:-.03em;margin:0 0 18px}.check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px}.check input{margin-top:3px}.check span{font-size:13px;line-height:1.5}.field{margin:16px 0}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.field small{display:block;color:var(--muted);font-size:12px;line-height:1.5;margin-top:6px}input[type=number]{width:100%;padding:12px 13px;border:1px solid #cfd6cf;border-radius:11px;background:#fff;font:inherit}.status{border-radius:14px;padding:16px;background:var(--soft);font-size:13px;line-height:1.6;margin-bottom:12px}.status strong{display:block;font-size:19px;margin-bottom:5px}.metric{padding:14px;border:1px solid var(--line);border-radius:14px}.metric b{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}.metric strong{font-size:28px;letter-spacing:-.04em}.warn{margin-top:12px;border-radius:14px;background:var(--amber);padding:14px;font-size:12px;line-height:1.6;color:#574a1f}.source{border-top:1px solid var(--line);padding-top:18px;margin-top:25px;color:var(--muted);font-size:12px;line-height:1.7}.source a{text-decoration:underline}.footer{border-top:1px solid var(--line);padding-top:18px;margin-top:38px;color:var(--muted);font-size:12px;line-height:1.6}@media(max-width:760px){.grid{grid-template-columns:1fr}.nav{align-items:flex-start}h1{font-size:44px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<nav class="nav"><a class="brand" href="./">FirmaKroner</a><a class="back" href="./">← Alle værktøjer</a></nav>
+<div class="pill">Værktøj 08 · Hjemmekontor</div>
+<h1>Hjemmekontoret er ikke bare “20 % af huslejen”.</h1>
+<p class="lead">SKAT er meget tilbageholdende med fradrag for selve et arbejdsværelse i den private bolig. Til gengæld kan skrivebord, skab og andet kontorinventar godt være helt eller delvist fradragsberettiget. Derfor holder FirmaKroner de to spørgsmål adskilt.</p>
+<section class="grid">
+<div class="card">
+<h2>1 · Selve rummet</h2>
+<label class="check"><input id="privatePossible" type="checkbox" checked><span><b>Rummet kan fysisk bruges privat</b><br>Fx som almindeligt kontor, gæsteværelse eller andet opholdsrum — også selv om du faktisk ikke bruger det privat.</span></label>
+<label class="check"><input id="exclusiveBusiness" type="checkbox"><span><b>Rummet bruges udelukkende erhvervsmæssigt</b><br>Ingen privat opbevaring eller anden privat anvendelse.</span></label>
+<label class="check"><input id="mainWorkplace" type="checkbox"><span><b>Det er mit hovedarbejdssted</b><br>Ikke bare et sted, du arbejder lidt om aftenen ved siden af et andet hovedarbejdssted.</span></label>
+<label class="check"><input id="normalHours" type="checkbox"><span><b>Jeg bruger det væsentligt i normal arbejdstid</b><br>Praksis lægger vægt på arbejdets omfang og tidspunkt.</span></label>
+<h2 style="margin-top:24px">2 · Inventaret</h2>
+<div class="field"><label for="equipmentCost">Pris på skrivebord, skab og andet kontorinventar</label><input id="equipmentCost" type="number" min="0" step="100" value="8000"></div>
+<div class="field"><label for="businessUse">Erhvervsmæssig brug af inventaret</label><input id="businessUse" type="number" min="0" max="100" step="5" value="75"><small>SKAT skriver, at inventaret kan fratrækkes helt eller delvist efter den erhvervsmæssige anvendelse. Dette felt er din egen vurdering af den faktiske brug.</small></div>
+</div>
+<div class="card">
+<h2>Resultat</h2>
+<div id="roomStatus" class="status"></div>
+<div class="metric"><b>Mulig erhvervsmæssig andel af kontorinventaret</b><strong id="equipmentDeduction">6.000 kr.</strong></div>
+<div class="warn"><b>Ingen falsk huslejeberegning.</b> Hvis selve rummet ser ud til at kunne kvalificere, beregner FirmaKroner stadig ikke automatisk “x % af boligudgiften”. Beregningen afhænger bl.a. af boligform og hvilke konkrete udgifter, reglerne tillader. Den del kræver en konkret vurdering.</div>
+</div>
+</section>
+<div class="source"><b>Kilder og afgrænsning.</b> Skattestyrelsen skriver, at et lokale i den private bolig ikke kan trækkes fra, hvis det kan bruges privat; et almindeligt kontor vil derfor næsten altid falde udenfor. Den juridiske vejledning beskriver samtidig, at særlige arbejdsværelser kan godkendes efter en samlet konkret vurdering af bl.a. indretning og væsentlig erhvervsmæssig brug. Kontorinventar kan derimod være helt eller delvist fradragsberettiget efter den faktiske virksomhedsbrug. <a href="https://skat.dk/erhverv/egen-virksomhed/fradrag-for-virksomhedens-udgifter" rel="noopener">Skattestyrelsens oversigt</a> · <a href="https://info.skat.dk/data.aspx?oid=2083512" rel="noopener">Den juridiske vejledning</a>.</div>
+<footer class="footer">FirmaKroner er et screenings- og beregningsværktøj — ikke skatte-, revisions- eller juridisk rådgivning.</footer>
+</main>
+<script src="hjemmekontor-lib.js"></script>
+<script>
+const fmt=n=>new Intl.NumberFormat('da-DK',{maximumFractionDigits:0}).format(Math.round(n))+' kr.';
+function render(){
+ const r=FirmaKronerHomeOffice.assess({privatePossible:document.getElementById('privatePossible').checked,exclusiveBusiness:document.getElementById('exclusiveBusiness').checked,mainWorkplace:document.getElementById('mainWorkplace').checked,normalHours:document.getElementById('normalHours').checked,equipmentCost:document.getElementById('equipmentCost').value,businessUse:document.getElementById('businessUse').value});
+ const labels={unlikely:'Stærkt signal: typisk nej til selve rummet',possible:'Muligt særtilfælde — kræver konkret vurdering',weak:'Svagt signal — fradrag ser vanskeligt ud',uncertain:'Kræver konkret vurdering'};
+ document.getElementById('roomStatus').innerHTML='<strong>'+labels[r.roomStatus]+'</strong>'+r.roomReason;
+ document.getElementById('equipmentDeduction').textContent=fmt(r.equipmentDeduction);
+}
+['privatePossible','exclusiveBusiness','mainWorkplace','normalHours','equipmentCost','businessUse'].forEach(id=>document.getElementById(id).addEventListener('input',render));render();
+</script>
+</body>
+</html>
