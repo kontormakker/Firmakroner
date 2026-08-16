@@ -10,9 +10,10 @@
       return {
         status:'not-yet',
         title:'Ikke endnu — men når du får CVR/SE, skal virksomheden have en NemKonto',
-        summary:'NemKonto-pligten knytter sig til virksomheden og dens CVR-/SE-nummer. Når nummeret er på plads, skal virksomheden anvise en NemKonto senest i forbindelse med den første offentlige udbetaling.',
+        summary:'NemKonto-pligten knytter sig til virksomheden og dens CVR-/SE-nummer. Når nummeret er på plads, skal virksomheden anvise en NemKonto senest i forbindelse med den første offentlige udbetaling. Denne checker afgør ikke bankkrav ved selskabsstiftelse før CVR.',
         nemkontoRequired:false,
         specialBusinessProductRequired:false,
+        separateEconomyRequired:null,
         basalRight:false
       };
     }
@@ -25,6 +26,7 @@
           summary:'Visse pengeinstitutter er forpligtet til at tilbyde en basal erhvervskonto til erhvervsdrivende med den krævede danske tilknytning, medmindre en lovlig afslagsgrund gælder. Efter en fuldstændig ansøgning skal instituttet som udgangspunkt åbne kontoen eller give afslag senest 10 arbejdsdage senere.',
           nemkontoRequired:true,
           specialBusinessProductRequired:true,
+          separateEconomyRequired:null,
           basalRight:true
         };
       }
@@ -34,6 +36,7 @@
         summary:'Retten gælder ikke ubetinget for alle ansøgere og alle banker. Den afhænger blandt andet af virksomhedens danske tilknytning, instituttet og de lovlige afslagsgrunde. Virksomheden skal stadig have en NemKonto.',
         nemkontoRequired:true,
         specialBusinessProductRequired:null,
+        separateEconomyRequired:null,
         basalRight:null
       };
     }
@@ -46,6 +49,7 @@
           summary:'For en personligt ejet virksomhed er en betalt erhvervskonto ikke et generelt lovkrav. Dit finansielle institut afgør dog, om en privatejet konto må bruges erhvervsmæssigt. Hvis banken tillader det, skal kontoen stadig anvises som virksomhedens NemKonto under CVR-/SE-nummeret.',
           nemkontoRequired:true,
           specialBusinessProductRequired:false,
+          separateEconomyRequired:false,
           basalRight:false
         };
       }
@@ -56,6 +60,7 @@
           summary:'Det skyldes bankens vilkår for erhvervsmæssig brug af private konti — ikke et generelt lovkrav om at købe et bestemt erhvervskontoprodukt. Virksomheden skal samtidig have en NemKonto.',
           nemkontoRequired:true,
           specialBusinessProductRequired:true,
+          separateEconomyRequired:false,
           basalRight:false
         };
       }
@@ -65,6 +70,7 @@
         summary:'NemKonto er obligatorisk for virksomheden, men NemKonto og en betalt erhvervskonto er ikke det samme. For en personligt ejet virksomhed afgør banken, om den vil tillade en privatejet konto til erhvervsmæssig brug.',
         nemkontoRequired:true,
         specialBusinessProductRequired:null,
+        separateEconomyRequired:false,
         basalRight:false
       };
     }
@@ -75,7 +81,8 @@
         title:'Selskabets økonomi skal holdes adskilt fra din private økonomi',
         summary:'Virksomhedsguiden beskriver ikke en bestemt bankpakke som et generelt lovkrav, men selskaber skal holde selskabets økonomi adskilt fra ejerens privatøkonomi. Selskabet skal desuden have sin egen NemKonto under CVR-nummeret.',
         nemkontoRequired:true,
-        specialBusinessProductRequired:true,
+        specialBusinessProductRequired:false,
+        separateEconomyRequired:true,
         basalRight:false
       };
     }
@@ -86,6 +93,7 @@
       summary:'Virksomheder med CVR-/SE-nummer skal have en NemKonto. For denne virksomhedsform afgør checkeren ikke, hvilken konkret kontotype eller bankaftale der er nødvendig.',
       nemkontoRequired:true,
       specialBusinessProductRequired:null,
+      separateEconomyRequired:null,
       basalRight:false
     };
   }
