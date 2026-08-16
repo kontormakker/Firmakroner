@@ -77,7 +77,7 @@ jobs:
           OK=0
           for i in {1..12}; do
             if curl --retry 2 --retry-delay 1 --retry-all-errors -fsS "${SITEMAP}?deploy=${GITHUB_SHA}" -o /tmp/public-sitemap.xml; then
-              if python3 -c "import xml.etree.ElementTree as ET; ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}; r=ET.parse('/tmp/public-sitemap.xml').getroot(); u=[n.text for n in r.findall('.//s:loc',ns) if n.text]; assert len(u)==22, len(u); assert 'https://kontormakker.github.io/Firmakroner/' in u; assert 'https://kontormakker.github.io/Firmakroner/pmv-eller-enkeltmandsvirksomhed.html' in u; assert 'https://kontormakker.github.io/Firmakroner/skjul-hjemmeadresse-cvr.html' in u; assert 'https://kontormakker.github.io/Firmakroner/skal-jeg-have-erhvervskonto.html' in u; print('public sitemap OK:',len(u),'URLs')"; then
+              if python3 -c "import xml.etree.ElementTree as ET; ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}; r=ET.parse('/tmp/public-sitemap.xml').getroot(); u=[n.text for n in r.findall('.//s:loc',ns) if n.text]; assert len(u)==23, len(u); assert 'https://kontormakker.github.io/Firmakroner/' in u; assert 'https://kontormakker.github.io/Firmakroner/pmv-eller-enkeltmandsvirksomhed.html' in u; assert 'https://kontormakker.github.io/Firmakroner/skjul-hjemmeadresse-cvr.html' in u; assert 'https://kontormakker.github.io/Firmakroner/skal-jeg-have-erhvervskonto.html' in u; assert 'https://kontormakker.github.io/Firmakroner/skal-jeg-have-lei-kode.html' in u; print('public sitemap OK:',len(u),'URLs')"; then
                 OK=1
                 break
               fi
@@ -101,7 +101,7 @@ jobs:
           ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
           root=ET.parse('/tmp/public-sitemap.xml').getroot()
           urls=[node.text for node in root.findall('.//s:loc',ns) if node.text]
-          assert len(urls)==22, len(urls)
+          assert len(urls)==23, len(urls)
           sha=os.environ['DEPLOY_SHA']
 
           def fetch(url):
@@ -135,6 +135,9 @@ jobs:
           bank=fetch('https://kontormakker.github.io/Firmakroner/skal-jeg-have-erhvervskonto.html')
           assert 'Skal du have en erhvervskonto?' in bank, 'business account checker missing live'
           assert '10 arbejdsdage' in bank and 'nemkonto.dk' in bank and 'finanstilsynet.dk' in bank, 'business account rule/source guards missing live'
+          lei=fetch('https://kontormakker.github.io/Firmakroner/skal-jeg-have-lei-kode.html')
+          assert 'Skal du have en LEI-kode?' in lei, 'LEI checker missing live'
+          assert 'Ingen bagatelgrænse' in lei and 'finanstilsynet.dk' in lei and 'derivater' in lei, 'LEI rule/source guards missing live'
           print(f'live-page-gate: {len(urls)} sitemap pages returned 200 with canonical; critical markers present')
           PY
 
