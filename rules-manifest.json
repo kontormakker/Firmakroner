@@ -24,6 +24,7 @@
     "pmv-eller-enkeltmandsvirksomhed.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk","virksomhedsguiden.dk"]},
     "skjul-hjemmeadresse-cvr.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-17","reviewAfter":"2026-12-31","sources":["erhvervsstyrelsen.dk","virksomhedsguiden.dk","virk.dk","datatilsynet.dk"]},
     "skal-jeg-have-erhvervskonto.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-17","reviewAfter":"2026-12-31","sources":["nemkonto.dk","virksomhedsguiden.dk","finanstilsynet.dk","retsinformation.dk"]},
+    "skal-jeg-have-lei-kode.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-17","reviewAfter":"2026-12-31","sources":["finanstilsynet.dk"]},
     "satser-2026.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk","info.skat.dk"]}
   }
 }
