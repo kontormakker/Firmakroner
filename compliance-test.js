@@ -47,12 +47,13 @@ for(const url of urls){
   assert(!/<(?:img|iframe)[^>]+partner-ads\.com/i.test(html),`${rel}: no Partner-Ads pixel/banner embeds allowed`);
 }
 
-assert.equal(urls.length,22,'expected 22 public URLs after business account checker release');
+assert.equal(urls.length,23,'expected 23 public URLs after LEI checker release');
 const index=fs.readFileSync('index.html','utf8');
 assert(/name=["']google-site-verification["']/i.test(index),'Google Search Console verification must remain on the homepage');
-assert(/17 gratis værktøjer/i.test(index),'portal tool count must stay in sync');
+assert(/18 gratis værktøjer/i.test(index),'portal tool count must stay in sync');
 assert(/skjul-hjemmeadresse-cvr\.html/i.test(index),'CVR privacy checker must be discoverable from portal');
 assert(/skal-jeg-have-erhvervskonto\.html/i.test(index),'business account checker must be discoverable from portal');
+assert(/skal-jeg-have-lei-kode\.html/i.test(index),'LEI checker must be discoverable from portal');
 const cvr=fs.readFileSync('skjul-hjemmeadresse-cvr.html','utf8');
 assert(/virksomhedsadresser altid skal offentliggøres/i.test(cvr),'CVR privacy page must state the public business-address rule');
 assert(/reklamebeskyttelse/i.test(cvr),'CVR privacy page must surface the free anti-marketing option');
@@ -62,6 +63,13 @@ assert(/NemKonto og en betalt erhvervskonto er ikke det samme/i.test(fs.readFile
 assert(/10 arbejdsdage/i.test(bank),'business account page must disclose the basic-account decision deadline');
 assert(/nemkonto\.dk/i.test(bank)&&/finanstilsynet\.dk/i.test(bank)&&/retsinformation\.dk/i.test(bank),'business account page must retain primary official sources');
 assert(!/partner-ads\.com/i.test(bank),'business account checker must stay non-commercial until a program is actually approved');
+const lei=fs.readFileSync('skal-jeg-have-lei-kode.html','utf8');
+const leiLogic=fs.readFileSync('lei-kode-lib.js','utf8');
+assert(/ingen bagatelgrænse/i.test(leiLogic),'LEI logic must preserve no-de-minimis rule');
+assert(/enkeltmandsvirksomhed/i.test(leiLogic)&&/derivater/i.test(leiLogic)&&/EMIR/i.test(leiLogic),'LEI logic must preserve sole-proprietor derivatives exception');
+assert(/eje værdipapirer uden LEI/i.test(leiLogic),'LEI logic must preserve hold-without-trading distinction');
+assert(/finanstilsynet\.dk/i.test(lei),'LEI checker must retain Finanstilsynet primary source');
+assert(!/partner-ads\.com/i.test(lei),'LEI checker must stay non-commercial until a program is actually approved and audited');
 const purchase=fs.readFileSync('firmakoeb.html','utf8');
 assert(/108 %-saldo/i.test(purchase),'firm-purchase page must disclose the 2025-2026 enhanced green basis');
 assert(/16\.900 kr\./i.test(purchase),'firm-purchase page must disclose mixed-use 2026 limit');
