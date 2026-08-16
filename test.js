@@ -27,17 +27,21 @@ assert(r.mixedUseAsset);assert.equal(r.treatment,'mixed-paused');near(r.taxBase,
 r=calculate({gross:50000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:10,taxRatePct:40});
 near(r.costAfterVat,40000);near(r.taxBase,4000);near(r.taxSaving,1600);n++;
 
-r=calculate({gross:125000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:25,taxRatePct:40,greenRequested:true,greenInPeriod:true,greenFactoryNew:true,greenElectricOrBattery:true,greenExcludedType:false,greenFossilCapable:false});
+const greenBase={gross:125000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:25,taxRatePct:40,greenRequested:true,greenInPeriod:true,greenFactoryNew:true,greenElectricOrBattery:true,greenNoImmediateWriteOff:true,greenExcludedType:false,greenFossilCapable:false};
+r=calculate(greenBase);
 assert(r.greenEligible&&r.greenApplied);near(r.costAfterVat,100000);near(r.greenEnhancedBasis,108000);near(r.taxBase,27000);near(r.ordinaryTaxBase,25000);near(r.greenVsOrdinaryFirstYear,2000);near(r.taxSaving,10800);n++;
 
-r=calculate({gross:125000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:25,greenRequested:true,greenInPeriod:true,greenFactoryNew:true,greenElectricOrBattery:true,greenExcludedType:true,greenFossilCapable:false});
+r=calculate({...greenBase,greenNoImmediateWriteOff:false});
 assert(!r.greenEligible&&!r.greenApplied);near(r.taxBase,25000);n++;
 
-r=calculate({gross:125000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:80,type:'asset',deprRatePct:25,greenRequested:true,greenInPeriod:true,greenFactoryNew:true,greenElectricOrBattery:true});
+r=calculate({...greenBase,greenExcludedType:true});
+assert(!r.greenEligible&&!r.greenApplied);near(r.taxBase,25000);n++;
+
+r=calculate({...greenBase,taxDeductPct:80});
 assert(!r.greenEligible);assert.equal(r.treatment,'mixed-paused');near(r.taxBase,0);n++;
 
 // Under the small-asset limit, enhanced saldo can have a higher lifetime basis but a lower first-year deduction than ordinary immediate deduction.
-r=calculate({gross:12500,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:25,greenRequested:true,greenInPeriod:true,greenFactoryNew:true,greenElectricOrBattery:true});
+r=calculate({...greenBase,gross:12500});
 near(r.costAfterVat,10000);near(r.ordinaryTaxBase,10000);near(r.greenFirstYearTaxBase,2700);near(r.taxBase,2700);assert(r.greenVsOrdinaryFirstYear<0);n++;
 
 r=calculate({gross:12500,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:60,type:'expense',taxRatePct:40});
@@ -46,4 +50,4 @@ near(r.costAfterVat,10000);near(r.taxBase,6000);near(r.taxSaving,2400);assert.eq
 r=calculate({gross:-100,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset'});
 near(r.gross,0);near(r.costAfterVat,0);near(r.taxBase,0);n++;
 
-console.log(`firmakoeb: ${n}/14 audited tests passed`);
+console.log(`firmakoeb: ${n}/15 audited tests passed`);
