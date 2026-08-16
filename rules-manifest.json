@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "policy": {
+    "primarySourcesOnlyForFinalRules": true,
+    "reviewedAt": "2026-08-16",
+    "nextFullReviewNoLaterThan": "2027-01-01",
+    "note": "A passing date is not proof that a rule is unchanged. This manifest prevents year-specific rules from silently being carried into the next year without a deliberate re-audit."
+  },
+  "tools": {
+    "firmakoeb.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk","info.skat.dk"]},
+    "momsregistrering-under-50000.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "faktura-buffer.html": {"risk":"medium","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "udgifter-foer-opstart.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "koersel-privat-bil.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "telefon-internet.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "reklame-eller-repraesentation.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk","info.skat.dk"]},
+    "hjemmekontor-fradrag.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "kursus-eller-uddannelse-fradrag.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "arbejdstoej-fradrag.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "software-fra-udlandet-moms.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "faktura-krav-tjek.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "skal-jeg-bogfoere-digitalt-2026.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["erhvervsstyrelsen.dk","virksomhedsguiden.dk"]},
+    "hobby-eller-erhverv.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
+    "pmv-eller-enkeltmandsvirksomhed.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk","virksomhedsguiden.dk"]}
+  }
+}
