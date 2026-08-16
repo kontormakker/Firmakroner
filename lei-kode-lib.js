@@ -1,6 +1,6 @@
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.FirmaKronerLei=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
   function assess(input={}){
-    const entity=String(input.entity||'company');
+    const entity=String(input.entity||'legal');
     const activity=String(input.activity||'trade');
 
     if(entity==='private'){
