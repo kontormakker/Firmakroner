@@ -38,7 +38,8 @@
       inPeriod:Boolean(input.greenInPeriod),
       factoryNew:Boolean(input.greenFactoryNew),
       electricOrBattery:Boolean(input.greenElectricOrBattery),
-      noImmediateWriteOff:Boolean(input.greenNoImmediateWriteOff),
+      // Selecting the special saldo is itself the user's choice not to use immediate write-off for this scenario.
+      noImmediateWriteOff:greenRequested,
       excludedType:Boolean(input.greenExcludedType),
       fossilCapable:Boolean(input.greenFossilCapable)
     };
