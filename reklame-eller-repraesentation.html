@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reklame eller repræsentation? Beregn fradraget — FirmaKroner</title>
+<meta name="description" content="Beregn forskellen på reklame og repræsentation i virksomheden. Se skattemæssigt fradrag og momsfradrag for bl.a. annoncer, kundegaver og restaurantbesøg.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://kontormakker.github.io/Firmakroner/reklame-eller-repraesentation.html">
+<meta name="theme-color" content="#173c2a">
+<style>
+:root{--bg:#f4f5f1;--card:#fff;--text:#162019;--muted:#667069;--line:#dfe4dd;--green:#173c2a;--soft:#e8efe9;--amber:#fff5d8}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}a{color:inherit}.wrap{max-width:980px;margin:auto;padding:24px 18px 64px}.nav{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:42px}.brand{font-size:21px;font-weight:900;letter-spacing:-.04em;text-decoration:none}.back{font-size:13px;color:var(--muted)}.pill{font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:#50705c;margin-bottom:10px}h1{font-size:clamp(38px,7vw,65px);line-height:.98;letter-spacing:-.055em;margin:0 0 16px}.lead{font-size:18px;line-height:1.6;color:var(--muted);max-width:780px;margin:0 0 30px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}.card h2{font-size:20px;letter-spacing:-.03em;margin:0 0 18px}.field{margin-bottom:15px}.field label{display:block;font-size:13px;font-weight:800;margin-bottom:7px}.field small{display:block;color:var(--muted);font-size:12px;line-height:1.5;margin-top:6px}input[type=number],select{width:100%;padding:12px 13px;border:1px solid #cfd6cf;border-radius:11px;background:#fff;font:inherit;color:var(--text)}.check{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:12px}.check input{margin-top:3px}.check span{font-size:13px;line-height:1.5}.metric{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}.metric b{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}.metric strong{font-size:27px;letter-spacing:-.04em}.status{background:var(--soft);border-radius:14px;padding:14px;font-size:13px;line-height:1.6}.warn{background:var(--amber);border-radius:14px;padding:14px;font-size:12px;line-height:1.6;margin-top:12px;color:#574a1f}.source{border-top:1px solid var(--line);padding-top:18px;margin-top:25px;color:var(--muted);font-size:12px;line-height:1.7}.source a{text-decoration:underline}.footer{border-top:1px solid var(--line);padding-top:18px;margin-top:38px;color:var(--muted);font-size:12px;line-height:1.6}@media(max-width:760px){.grid{grid-template-columns:1fr}.nav{align-items:flex-start}h1{font-size:44px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<nav class="nav"><a class="brand" href="./">FirmaKroner</a><a class="back" href="./">← Alle værktøjer</a></nav>
+<div class="pill">Værktøj 07 · Salg & kunder</div>
+<h1>Reklame eller repræsentation — hvad kan du faktisk trække fra?</h1>
+<p class="lead">En annonce til en bred målgruppe og en middag med en kendt kunde bliver ikke behandlet ens. Vælg selv hvilken kategori din udgift hører til, og se regnestykket uden at blande moms- og skattefradrag sammen.</p>
+<section class="grid">
+<div class="card">
+<h2>Dine forudsætninger</h2>
+<div class="field"><label for="amount">Beløb inkl. moms</label><input id="amount" type="number" min="0" step="10" value="500"></div>
+<div class="field"><label for="type">Hvilken type udgift er det?</label><select id="type"><option value="restaurant">Restaurant med kunde/forretningsforbindelse</option><option value="representation">Anden repræsentation, fx kundegave</option><option value="advertising">Reklame/markedsføring mod en ubestemt kreds</option></select><small>Værktøjet klassificerer ikke en tvivlsom udgift for dig. Det viser konsekvensen af den kategori, du vælger.</small></div>
+<div class="field"><label for="vatRate">Moms på bilaget</label><select id="vatRate"><option value="25">25 %</option><option value="0">0 % / ingen moms</option></select></div>
+<label class="check"><input id="vatRegistered" type="checkbox" checked><span><b>Virksomheden er momsregistreret</b><br>Ellers beregnes intet momsfradrag.</span></label>
+<label class="check"><input id="strictBusiness" type="checkbox" checked><span><b>Restaurantudgiften er af strengt erhvervsmæssig karakter</b><br>Det er en forudsætning for det særlige 25 %-momsfradrag på restaurationsydelser.</span></label>
+</div>
+<div class="card">
+<h2>Resultat</h2>
+<div class="metric"><b>Moms på bilaget</b><strong id="vat">100,00 kr.</strong></div>
+<div class="metric"><b>Momsfradrag i dette scenario</b><strong id="vatDeduction">25,00 kr.</strong></div>
+<div class="metric"><b>Udgift efter momsfradrag</b><strong id="expenseBase">475,00 kr.</strong></div>
+<div class="metric"><b>Skattemæssigt fradrag</b><strong id="taxDeduction">118,75 kr.</strong></div>
+<div id="status" class="status"></div>
+<div class="warn"><b>Fradrag er ikke det samme som penge tilbage.</b> Et skattemæssigt fradrag på fx 118,75 kr. betyder, at den skattepligtige indkomst kan blive reduceret med 118,75 kr. — ikke at du får 118,75 kr. udbetalt.</div>
+</div>
+</section>
+<div class="source"><b>Regler brugt i værktøjet.</b> Skattestyrelsen beskriver reklameudgifter som fuldt fradragsberettigede, mens repræsentationsudgifter kun kan fratrækkes med 25 %. For restaurationsydelser af strengt erhvervsmæssig karakter kan en momsregistreret virksomhed fratrække 25 % af købsmomsen; den resterende ikke-fradragne moms indgår i udgiften, som derefter er underlagt 25 %-begrænsningen for repræsentation. <a href="https://skat.dk/erhverv/egen-virksomhed/fradrag-for-virksomhedens-udgifter" rel="noopener">Se Skattestyrelsens oversigt</a>. Klassifikationen mellem reklame og repræsentation kan bero på konkrete forhold.</div>
+<footer class="footer">FirmaKroner er et screenings- og beregningsværktøj — ikke skatte-, revisions- eller juridisk rådgivning.</footer>
+</main>
+<script src="reklame-repraesentation-lib.js"></script>
+<script>
+const fmt=n=>new Intl.NumberFormat('da-DK',{minimumFractionDigits:2,maximumFractionDigits:2}).format(n)+' kr.';
+function render(){
+ const type=document.getElementById('type').value;
+ const r=FirmaKronerRepresentation.calculate({amount:document.getElementById('amount').value,vatRate:document.getElementById('vatRate').value,vatRegistered:document.getElementById('vatRegistered').checked,strictBusiness:document.getElementById('strictBusiness').checked,type});
+ document.getElementById('vat').textContent=fmt(r.vat);
+ document.getElementById('vatDeduction').textContent=fmt(r.vatDeduction);
+ document.getElementById('expenseBase').textContent=fmt(r.deductibleExpenseBase);
+ document.getElementById('taxDeduction').textContent=fmt(r.incomeTaxDeduction);
+ const s=document.getElementById('status');
+ if(type==='advertising') s.innerHTML='<b>Reklame-scenario.</b><br>Udgiften behandles som markedsføring mod en ubestemt kreds. Skattemæssigt fradrag er 100 % af udgiften efter et eventuelt momsfradrag.';
+ else if(type==='restaurant') s.innerHTML='<b>Repræsentation på restaurant.</b><br>Skattefradraget er begrænset til 25 %. Momsfradraget er kun medtaget med 25 % af momsen, når du både er momsregistreret og har markeret udgiften som strengt erhvervsmæssig.';
+ else s.innerHTML='<b>Anden repræsentation.</b><br>Værktøjet bruger 25 % skattemæssigt fradrag og beregner ikke momsfradrag for fx en almindelig repræsentationsgave.';
+ document.getElementById('strictBusiness').disabled=type!=='restaurant';
+}
+['amount','type','vatRate','vatRegistered','strictBusiness'].forEach(id=>document.getElementById(id).addEventListener('input',render));render();
+</script>
+</body>
+</html>
