@@ -6,8 +6,8 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 
 ## 1. Kilder og faglig korrekthed
 
-- Juridiske, skatte-, moms-, CVR- og bogføringsmæssige påstande skal som udgangspunkt bygge på primære officielle kilder: SKAT/Skattestyrelsen, Den juridiske vejledning, Erhvervsstyrelsen, Virk, Datatilsynet eller Virksomhedsguiden.
-- Blogs, regnskabsprogrammer og andre kommercielle sider må bruges til at opdage spørgsmål, men ikke som autoritativt facit for en regel.
+- Juridiske, skatte-, moms-, CVR-, bank- og bogføringsmæssige påstande skal som udgangspunkt bygge på primære officielle kilder: SKAT/Skattestyrelsen, Den juridiske vejledning, Erhvervsstyrelsen, Virk, Digitaliseringsstyrelsen/NemKonto, Finanstilsynet, Retsinformation, Datatilsynet eller Virksomhedsguiden.
+- Blogs, regnskabsprogrammer, banker og andre kommercielle sider må bruges til at opdage spørgsmål, men ikke som autoritativt facit for en generel regel.
 - Årstal, beløbsgrænser, satser og perioder skal angives med deres præcise scope.
 - Hvis officielle sider ser indbyrdes inkonsistente eller forældede ud, skal værktøjet afgrænses til den regel, der kan dokumenteres sikkert. Den aktuelle lov/Den juridiske vejledning og nyere officiel vejledning vægtes højest.
 - Et værktøj må ikke udlede en juridisk klassifikation, hvis de nødvendige faktiske oplysninger mangler. Det skal i stedet vise signaler, scenarier eller `uden for denne checker`.
@@ -32,6 +32,7 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 - Et affiliate-link vises kun i en kontekst, hvor tjenesten er relevant for det spørgsmål, brugeren undersøger.
 - Der må ikke stå eller antydes, at en bestemt kommerciel tjeneste er obligatorisk, hvis flere lovlige løsninger findes.
 - Gratis myndighedsløsninger vises før en betalt løsning, når de løser brugerens problem. CVR-adresseværktøjet har derfor ingen kommerciel adressehenvisning.
+- Bank/NemKonto-værktøjet er tilsvarende ikke-kommercielt, indtil et relevant program faktisk er godkendt og det konkrete produkt er kontrolleret mod brugerens resultat. En mulig provision må aldrig omformulere bankvilkår til et lovkrav.
 - `affiliate.html`, `privatliv.html`, browser-smoke og compliance-test skal holdes synkroniseret med den faktiske implementering.
 
 ## 4. Privatliv
@@ -45,8 +46,8 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 - Google Search Console-verifikationstagget på forsiden må ikke fjernes ved senere refaktorering.
 - Hver URL i `sitemap.xml` skal pege på en faktisk offentlig fil med korrekt canonical.
 - Gamle delte links via `/?p=...` skal fortsat omdirigeres til `firmakoeb.html` med query-parametrene bevaret.
-- Efter produktion-deploy skal den offentlige `sitemap.xml` hentes og XML-parses, før release-flowet betragtes som fuldt grønt.
-- IndexNow må først køre efter en succesfuld Pages-deploy.
+- Efter produktion-deploy skal den offentlige `sitemap.xml` hentes og XML-parses, og hver offentlig URL skal returnere en side med korrekt canonical, før release-flowet betragtes som fuldt grønt.
+- IndexNow må først køre efter en succesfuld Pages-deploy og live-sidekontrol.
 
 ## 6. Faglig audit 2026-08-16/17
 
@@ -59,6 +60,7 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 - **Digital bogføring 2026:** over 300.000 kr. i to på hinanden følgende forudgående indkomstår; præcis 300.000 kr. er ikke over; nye virksomheder kan tidligst rammes fra tredje indkomstår. **Bestået.**
 - **Firmakøb 2026:** 36.000-kr.-grænsen anvendes på faktisk omkostningsgrundlag efter det momsfradrag, brugeren angiver, så ikke-fradraget moms forbliver i anskaffelsessummen. Blandet brug stopper skatteestimatet og viser 16.900-kr.-særgrænsen. 108 %-saldoen er betinget og viser førsteårs-effekt. **Bestået efter migration og rettelse.**
 - **CVR hjemmeadresse:** Erhvervsstyrelsen bekræfter, at CVR indeholder navn og adresse. Virk og Datatilsynet præciserer, at en CPR-beskyttet privatadresse kan skjules som personoplysning, men at en virksomhedsadresse skal offentliggøres også når den er identisk med den beskyttede bopæl. CVR-reklamebeskyttelse begrænser brug af CVR-grunddata til direkte markedsføring, men skjuler ikke adressen. Google-adressevisning er en separat platformindstilling og ændrer ikke CVR. **Bestået mod officielle kilder 17. august 2026.**
+- **Erhvervskonto/NemKonto:** Lov om offentlige betalinger og NemKonto fastslår, at virksomheder med CVR/SE skal anvise en virksomheds-NemKonto senest ved første offentlige udbetaling. NemKontos aktuelle FAQ siger, at det finansielle institut afgør, om en privatejet konto må bruges erhvervsmæssigt. Virksomhedsguiden oplyser, at et bestemt erhvervskontoprodukt ikke er et generelt lovkrav, mens selskaber skal holde økonomien adskilt fra ejerens privatøkonomi. Finanstilsynet og lov om betalingskonti og basale erhvervskonti beskriver en betinget ret til basal erhvervskonto hos omfattede institutter og en frist på højst 10 arbejdsdage efter en fuldstændig ansøgning. Checkeren stopper ved virksomhedsformer/tilknytning, den ikke kan klassificere sikkert. **Bestået mod officielle kilder 17. august 2026.**
 - **Dinero affiliate:** det udstedte Partner-Ads-link er tilgængeligt efter programgodkendelsen og vises kun kontekstuelt på digital-bogføringssiden med tydelig reklamemarkering. Dinero beskrives som ét af flere registrerede bogføringssystemer. **Bestået.**
 - **Google:** Search Console-verifikation bevares i `index.html`; sitemap valideres lokalt og efter deploy. **Bestået i kode; offentlig efter-deploy-gate kræves ved hver release.**
 

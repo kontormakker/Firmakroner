@@ -1,6 +1,6 @@
 # FirmaKroner
 
-Gratis dansk værktøjsside, der oversætter små selvstændiges konkrete spørgsmål om moms, firmakøb, fradrag, CVR og bogføring til forståelige beslutninger.
+Gratis dansk værktøjsside, der oversætter små selvstændiges konkrete spørgsmål om moms, firmakøb, fradrag, CVR, bank/NemKonto og bogføring til forståelige beslutninger.
 
 ## Produktprincip
 
@@ -20,9 +20,9 @@ Hvis et spørgsmål ikke kan afgøres sikkert ud fra brugerens svar, skal værkt
 
 Gratis, søgbare beslutningsværktøjer → brugeren løser et reelt problem → kun når resultatet naturligt peger på en ekstern tjeneste, kan FirmaKroner vise et tydeligt markeret reklamelink.
 
-Det første aktive kommercielle spor er Dinero via Partner-Ads på den kontekstuelle digital-bogføringsside. En separat virksomhedsadresse er fortsat en valideringshypotese, men har intet aktivt reklamelink endnu. Gratis myndighedsløsninger skal altid vises før en betalt løsning, når de faktisk løser brugerens problem. Provision må aldrig ændre et resultat.
+Det første aktive kommercielle spor er Dinero via Partner-Ads på den kontekstuelle digital-bogføringsside. Separat virksomhedsadresse og erhvervskonto er valideringsspor, men de har ingen aktive reklamelinks. Bank/NemKonto-sporet er bevidst bygget gratis først, fordi den korrekte konklusion ofte kan være at spørge brugerens eksisterende bank eller bruge retten til basal erhvervskonto frem for at købe en ny tjeneste. Gratis myndighedsløsninger skal altid vises før en betalt løsning, når de faktisk løser brugerens problem. Provision må aldrig ændre et resultat.
 
-Der er ingen analytics, cookies, login, backend eller betalte driftstjenester. Det aktive Dinero-link er et almindeligt udgående reklamelink; ingen Partner-Ads-script eller trackingpixel indlæses på FirmaKroner.
+Der er ingen analytics, cookies, login, backend eller betalte driftstjenester. Det aktive Dinero-link er et almindeligt udgående reklamelink, som først aktiveres efter brugerens samtykke; ingen Partner-Ads-script eller trackingpixel indlæses på FirmaKroner.
 
 ## Kritisk validering
 
@@ -31,6 +31,8 @@ Et nyt værktøj må kun overleve, hvis alle tre spørgsmål kan besvares rimeli
 1. **Målgruppe:** Findes der en konkret gruppe med problemet?
 2. **Adgang:** Kan spørgsmålet realistisk findes via søgning eller en lovlig distributionskanal uden stort annoncebudget?
 3. **Økonomi:** Findes der en relevant næste handling, som kan skabe indtjening uden at forringe det gratis svar?
+
+Bank/NemKonto-checkeren overlevede denne gate, fordi søgninger om krav til erhvervskonto/NemKonto er konkrete og kommercielt relevante, men søgeresultaterne blander ofte NemKonto, bankvilkår og lovkrav sammen. Differentieringen er derfor en interaktiv, konservativ afklaring med officielle kilder — ikke endnu en banksammenligning. Eventuel monetisering må først komme efter separat programgodkendelse og produktkontrol.
 
 Generiske artikler og højkonkurrence-sammenligninger bygges ikke bare for at øge sidetallet.
 
