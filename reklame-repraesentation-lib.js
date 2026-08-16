@@ -8,7 +8,7 @@
     const gross=Math.max(0,num(input.amount));
     const vatRate=Math.max(0,num(input.vatRate));
     const vatRegistered=Boolean(input.vatRegistered);
-    const strictBusiness=Boolean(input.strictBusiness);
+    const businessConnection=Boolean(input.businessConnection);
     const type=['advertising','restaurant','representation'].includes(input.type)?input.type:'representation';
     const vat=gross-(gross/(1+vatRate/100));
     const net=gross-vat;
@@ -21,7 +21,10 @@
       deductibleExpenseBase=gross-vatDeduction;
       incomeTaxDeduction=deductibleExpenseBase;
     }else if(type==='restaurant'){
-      vatDeduction=vatRegistered&&strictBusiness?vat*0.25:0;
+      // Current SKAT guidance allows full input-VAT deduction for restaurant costs
+      // incurred for business connections. Other restaurant situations have their
+      // own rules, so this calculator deliberately does not guess them.
+      vatDeduction=vatRegistered&&businessConnection?vat:0;
       deductibleExpenseBase=gross-vatDeduction;
       incomeTaxDeduction=deductibleExpenseBase*0.25;
     }else{
