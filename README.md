@@ -18,11 +18,11 @@ Hvis et spørgsmål ikke kan afgøres sikkert ud fra brugerens svar, skal værkt
 
 ## Forretningshypotese
 
-Gratis, søgbare beslutningsværktøjer → brugeren løser et reelt problem → kun når resultatet naturligt peger på en ekstern tjeneste, kan FirmaKroner senere vise et tydeligt markeret reklamelink.
+Gratis, søgbare beslutningsværktøjer → brugeren løser et reelt problem → kun når resultatet naturligt peger på en ekstern tjeneste, kan FirmaKroner vise et tydeligt markeret reklamelink.
 
-De første kommercielle hypoteser er regnskabssoftware og legitim separat virksomhedsadresse. Gratis myndighedsløsninger skal altid vises før en betalt løsning, når de faktisk løser brugerens problem. Provision må aldrig ændre et resultat.
+Det første aktive kommercielle spor er Dinero via Partner-Ads på den kontekstuelle digital-bogføringsside. En separat virksomhedsadresse er fortsat en valideringshypotese, men har intet aktivt reklamelink endnu. Gratis myndighedsløsninger skal altid vises før en betalt løsning, når de faktisk løser brugerens problem. Provision må aldrig ændre et resultat.
 
-Der er fortsat ingen aktive affiliate-links, analytics, cookies, login, backend eller betalte tjenester.
+Der er ingen analytics, cookies, login, backend eller betalte driftstjenester. Det aktive Dinero-link er et almindeligt udgående reklamelink; ingen Partner-Ads-script eller trackingpixel indlæses på FirmaKroner.
 
 ## Kritisk validering
 
