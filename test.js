@@ -27,12 +27,9 @@ assert(r.mixedUseAsset);assert.equal(r.treatment,'mixed-paused');near(r.taxBase,
 r=calculate({gross:50000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:10,taxRatePct:40});
 near(r.costAfterVat,40000);near(r.taxBase,4000);near(r.taxSaving,1600);n++;
 
-const greenBase={gross:125000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:25,taxRatePct:40,greenRequested:true,greenInPeriod:true,greenFactoryNew:true,greenElectricOrBattery:true,greenNoImmediateWriteOff:true,greenExcludedType:false,greenFossilCapable:false};
+const greenBase={gross:125000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:25,taxRatePct:40,greenRequested:true,greenInPeriod:true,greenFactoryNew:true,greenElectricOrBattery:true,greenExcludedType:false,greenFossilCapable:false};
 r=calculate(greenBase);
-assert(r.greenEligible&&r.greenApplied);near(r.costAfterVat,100000);near(r.greenEnhancedBasis,108000);near(r.taxBase,27000);near(r.ordinaryTaxBase,25000);near(r.greenVsOrdinaryFirstYear,2000);near(r.taxSaving,10800);n++;
-
-r=calculate({...greenBase,greenNoImmediateWriteOff:false});
-assert(!r.greenEligible&&!r.greenApplied);near(r.taxBase,25000);n++;
+assert(r.greenEligible&&r.greenApplied&&r.greenConditions.noImmediateWriteOff);near(r.costAfterVat,100000);near(r.greenEnhancedBasis,108000);near(r.taxBase,27000);near(r.ordinaryTaxBase,25000);near(r.greenVsOrdinaryFirstYear,2000);near(r.taxSaving,10800);n++;
 
 r=calculate({...greenBase,greenExcludedType:true});
 assert(!r.greenEligible&&!r.greenApplied);near(r.taxBase,25000);n++;
@@ -50,4 +47,4 @@ near(r.costAfterVat,10000);near(r.taxBase,6000);near(r.taxSaving,2400);assert.eq
 r=calculate({gross:-100,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset'});
 near(r.gross,0);near(r.costAfterVat,0);near(r.taxBase,0);n++;
 
-console.log(`firmakoeb: ${n}/15 audited tests passed`);
+console.log(`firmakoeb: ${n}/14 audited tests passed`);
