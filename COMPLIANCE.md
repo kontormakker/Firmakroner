@@ -24,16 +24,16 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 ## 3. Affiliate og markedsføring
 
 - Et affiliate-link må først publiceres, når programmet faktisk er godkendt og det udstedte trackinglink er tilgængeligt.
-- Partner-Ads oplyser selv, at reklamer/affiliatelinks først hentes efter programgodkendelse. FirmaKroners Dinero-link er det udstedte link med partner-id `57323` og banner-id `50128`.
+- Aktuelle udstedte Partner-Ads-links er Dinero med partner-id `57323` / banner-id `50128` og LEI Service DK med partner-id `57323` / banner-id `85033`.
 - Kommercielle links markeres direkte og synligt som `Reklame · reklamelink for [brand]` eller tilsvarende tydeligt sprog.
 - Affiliate-links bruger `rel="sponsored nofollow noopener"`.
-- FirmaKroner indlæser ikke Partner-Ads-scripts, trackingpixels, iframes eller bannere før brugeren selv klikker på et reklamelink.
+- FirmaKroner indlæser ikke Partner-Ads-scripts, trackingpixels, iframes eller bannere ved sidevisning. Det faktiske trackinglink ligger inert, indtil brugeren aktivt giver samtykke ved den konkrete reklame.
 - Affiliateprovision må aldrig påvirke beregningsresultater, kriterier, officielle kilder eller en faglig konklusion.
 - Et affiliate-link vises kun i en kontekst, hvor tjenesten er relevant for det spørgsmål, brugeren undersøger.
 - Der må ikke stå eller antydes, at en bestemt kommerciel tjeneste er obligatorisk, hvis flere lovlige løsninger findes.
 - Gratis myndighedsløsninger vises før en betalt løsning, når de løser brugerens problem. CVR-adresseværktøjet har derfor ingen kommerciel adressehenvisning.
-- Bank/NemKonto-værktøjet er tilsvarende ikke-kommercielt, indtil et relevant program faktisk er godkendt og det konkrete produkt er kontrolleret mod brugerens resultat. En mulig provision må aldrig omformulere bankvilkår til et lovkrav.
-- LEI-værktøjet må kun afgøre behovet ud fra Finanstilsynets regler. Partner-Ads har et LEI Service DK-program, men intet link må publiceres, før FirmaKroner er godkendt til programmet og det udstedte link er kontrolleret. LEI Service ApS er verificeret som aktiv dansk virksomhed/registreringsagent via RapidLEI, men udbyderens egne markedsføringspåstande bruges ikke som regelkilde. Særligt må hurtigheds- eller prisudsagn ikke kopieres ukritisk, da deres offentlige sider angiver forskellige behandlingstider afhængigt af side og vilkår.
+- Bank/NemKonto-værktøjet er ikke-kommercielt, indtil et relevant program faktisk er godkendt og det konkrete produkt er kontrolleret mod brugerens resultat. En mulig provision må aldrig omformulere bankvilkår til et lovkrav.
+- LEI-værktøjet afgør behovet udelukkende ud fra Finanstilsynets regler. Reklamen for LEI Service DK vises kun, når `leiRequired === true`; ved et “nej”, “ikke endnu” eller uklart resultat vises ingen LEI-reklame. FirmaKroner sammenligner ikke pris, behandlingstid eller kvalitet og kopierer ikke udbyderens “bedst/billigst”-påstande ind i regelresultatet.
 - `affiliate.html`, `privatliv.html`, browser-smoke og compliance-test skal holdes synkroniseret med den faktiske implementering.
 
 ## 4. Privatliv
@@ -41,6 +41,7 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 - Ingen brugerlogin, database, analytics eller brugerprofilering indføres uden særskilt privacy-review.
 - Beregningsinput skal fortsat behandles lokalt i browseren, medmindre en fremtidig funktion udtrykkeligt kræver andet og privacy-siden opdateres først.
 - Eksterne links beskrives som et skift til en anden tjenestes privatlivs- og trackingpraksis.
+- Partner-Ads-tracking kræver aktivt samtykke ved hvert reklamelink. Samtykket gemmes ikke mellem besøg.
 
 ## 5. Søgemaskiner og drift
 
@@ -63,7 +64,8 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 - **CVR hjemmeadresse:** Erhvervsstyrelsen bekræfter, at CVR indeholder navn og adresse. Virk og Datatilsynet præciserer, at en CPR-beskyttet privatadresse kan skjules som personoplysning, men at en virksomhedsadresse skal offentliggøres også når den er identisk med den beskyttede bopæl. CVR-reklamebeskyttelse begrænser brug af CVR-grunddata til direkte markedsføring, men skjuler ikke adressen. Google-adressevisning er en separat platformindstilling og ændrer ikke CVR. **Bestået mod officielle kilder 17. august 2026.**
 - **Erhvervskonto/NemKonto:** Lov om offentlige betalinger og NemKonto fastslår, at virksomheder med CVR/SE skal anvise en virksomheds-NemKonto senest ved første offentlige udbetaling. NemKontos aktuelle FAQ siger, at det finansielle institut afgør, om en privatejet konto må bruges erhvervsmæssigt. Virksomhedsguiden oplyser, at et bestemt erhvervskontoprodukt ikke er et generelt lovkrav, mens selskaber skal holde økonomien adskilt fra ejerens privatøkonomi. Finanstilsynet og lov om betalingskonti og basale erhvervskonti beskriver en betinget ret til basal erhvervskonto hos omfattede institutter og en frist på højst 10 arbejdsdage efter en fuldstændig ansøgning. Checkeren stopper ved virksomhedsformer/tilknytning, den ikke kan klassificere sikkert. **Bestået mod officielle kilder 17. august 2026.**
 - **LEI-kode:** Finanstilsynet fastslår, at juridiske personer, der vil købe eller sælge værdipapirer, skal have LEI, uden bagatelgrænse for antal eller værdi. Fysiske personer identificeres med CPR. En enkeltmandsvirksomhed behøver ikke LEI ved handel med andre finansielle instrumenter end derivater, men derivathandel kræver LEI efter EMIR. En juridisk person kan fortsat eje eksisterende værdipapirer uden LEI, hvis den ikke vil købe eller sælge. Værdipapirhandleren må ikke gennemføre den relevante handel for en juridisk person uden LEI. Checkeren klassificerer ikke selv et konkret produkt som værdipapir eller derivat. **Bestået mod Finanstilsynet 17. august 2026.**
-- **Dinero affiliate:** det udstedte Partner-Ads-link er tilgængeligt efter programgodkendelsen og vises kun kontekstuelt på digital-bogføringssiden med tydelig reklamemarkering. Dinero beskrives som ét af flere registrerede bogføringssystemer. **Bestået.**
+- **Dinero affiliate:** det udstedte Partner-Ads-link vises kun kontekstuelt på digital-bogføringssiden med tydelig reklamemarkering og samtykkegate. Dinero beskrives som ét af flere registrerede bogføringssystemer. **Bestået.**
+- **LEI Service DK affiliate:** programadgang er dokumenteret med udstedt Partner-Ads-link `partnerid=57323&bannerid=85033`. Linket ligger kun på LEI-checkeren, er inert før samtykke og vises kun ved et resultat, der siger, at LEI er nødvendigt. Regelresultatet og Finanstilsynets kilder er uændrede. **Bestået.**
 - **Google:** Search Console-verifikation bevares i `index.html`; sitemap valideres lokalt og efter deploy. **Bestået i kode; offentlig efter-deploy-gate kræves ved hver release.**
 
 ## 7. Automatisk freshness-lock
