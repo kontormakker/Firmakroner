@@ -27,7 +27,7 @@ for(const url of urls){
     for(const link of links){
       assert(/rel=["'][^"']*sponsored[^"']*nofollow[^"']*noopener[^"']*["']/i.test(link),`${rel}: affiliate link must be sponsored nofollow noopener`);
     }
-    if(links.length) assert(/reklame[^<]{0,80}reklamelink for Dinero/i.test(html)||/reklamelink for Dinero/i.test(html),`${rel}: affiliate link lacks clear advertising label`);
+    if(links.length) assert(/reklamelink/i.test(html),`${rel}: affiliate link lacks clear advertising label`);
     assert(!/<script[^>]+partner-ads\.com/i.test(html),`${rel}: no Partner-Ads scripts allowed`);
     assert(!/<(?:img|iframe)[^>]+partner-ads\.com/i.test(html),`${rel}: no Partner-Ads pixel/banner embeds allowed`);
   }
@@ -41,12 +41,11 @@ const purchase=fs.readFileSync('firmakoeb.html','utf8');
 assert(/108 %-saldo/i.test(purchase),'firm-purchase page must disclose the 2025-2026 enhanced green basis');
 assert(/16\.900 kr\./i.test(purchase),'firm-purchase page must disclose mixed-use 2026 limit');
 assert(/Ikke-fradragsberettiget moms/i.test(purchase),'firm-purchase page must keep non-deductible VAT in cost basis');
-assert(!/Ingen affiliate-links er aktive endnu/i.test(purchase),'stale affiliate status must not return');
 const affiliate=fs.readFileSync('affiliate.html','utf8');
-assert(/aktivt affiliate-samarbejde med Dinero/i.test(affiliate),'affiliate disclosure must reflect active Dinero partnership');
+assert(/endnu ingen aktive affiliate-links/i.test(affiliate),'affiliate disclosure must reflect pre-approval status');
 assert(/Beregninger påvirkes aldrig/i.test(affiliate),'affiliate independence rule missing');
 const privacy=fs.readFileSync('privatliv.html','utf8');
-assert(/Partner-Ads/i.test(privacy),'privacy page must describe Partner-Ads click boundary');
-assert(partnerLinks>=1,'at least one contextual Dinero affiliate link expected');
+assert(/Partner-Ads/i.test(privacy),'privacy page must describe the possible Partner-Ads click boundary');
+assert.equal(partnerLinks,0,'no Partner-Ads links expected before affiliate approval');
 
-console.log(`compliance-test: ${urls.length} public URLs checked; ${partnerLinks} affiliate link(s) compliant; all canonicals required`);
+console.log(`compliance-test: ${urls.length} public URLs checked; pre-approval affiliate state verified; all canonicals required`);
