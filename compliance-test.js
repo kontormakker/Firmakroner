@@ -37,10 +37,15 @@ for(const url of urls){
   }
 }
 
-assert.equal(urls.length,20,'expected 20 public URLs after PMV release');
+assert.equal(urls.length,21,'expected 21 public URLs after CVR privacy release');
 const index=fs.readFileSync('index.html','utf8');
 assert(/name=["']google-site-verification["']/i.test(index),'Google Search Console verification must remain on the homepage');
-assert(/15 gratis værktøjer/i.test(index),'portal tool count must stay in sync');
+assert(/16 gratis værktøjer/i.test(index),'portal tool count must stay in sync');
+assert(/skjul-hjemmeadresse-cvr\.html/i.test(index),'CVR privacy checker must be discoverable from portal');
+const cvr=fs.readFileSync('skjul-hjemmeadresse-cvr.html','utf8');
+assert(/virksomhedsadresser altid skal offentliggøres/i.test(cvr),'CVR privacy page must state the public business-address rule');
+assert(/reklamebeskyttelse/i.test(cvr),'CVR privacy page must surface the free anti-marketing option');
+assert(!/partner-ads\.com/i.test(cvr),'CVR privacy page must remain non-commercial before program approval');
 const purchase=fs.readFileSync('firmakoeb.html','utf8');
 assert(/108 %-saldo/i.test(purchase),'firm-purchase page must disclose the 2025-2026 enhanced green basis');
 assert(/16\.900 kr\./i.test(purchase),'firm-purchase page must disclose mixed-use 2026 limit');
