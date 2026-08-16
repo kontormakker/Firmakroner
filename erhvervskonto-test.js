@@ -5,11 +5,13 @@ let r=assess({hasCvr:false,form:'sole',bankPosition:'unknown'});
 assert.equal(r.status,'not-yet');
 assert.equal(r.nemkontoRequired,false);
 assert(/første offentlige udbetaling/i.test(r.summary));
+assert(/selskabsstiftelse før CVR/i.test(r.summary));
 
 r=assess({hasCvr:true,form:'sole',bankPosition:'allows-private'});
 assert.equal(r.status,'private-possible');
 assert.equal(r.nemkontoRequired,true);
 assert.equal(r.specialBusinessProductRequired,false);
+assert.equal(r.separateEconomyRequired,false);
 assert(/finansielle institut afgør/i.test(r.summary));
 
 r=assess({hasCvr:true,form:'sole',bankPosition:'requires-business'});
@@ -25,7 +27,8 @@ assert(/NemKonto og en betalt erhvervskonto er ikke det samme/i.test(r.summary))
 r=assess({hasCvr:true,form:'company',bankPosition:'unknown'});
 assert.equal(r.status,'company-separate');
 assert.equal(r.nemkontoRequired,true);
-assert.equal(r.specialBusinessProductRequired,true);
+assert.equal(r.specialBusinessProductRequired,false);
+assert.equal(r.separateEconomyRequired,true);
 assert(/adskilt/i.test(r.summary));
 
 r=assess({hasCvr:true,form:'other',bankPosition:'unknown'});
