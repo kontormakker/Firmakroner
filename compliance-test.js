@@ -8,9 +8,6 @@ assert.equal(new Set(urls).size,urls.length,'sitemap URLs must be unique');
 
 const prefix='https://kontormakker.github.io/Firmakroner/';
 const infoPages=new Set(['index.html','om.html','privatliv.html','affiliate.html','satser-2026.html']);
-// firmakoeb.html predates the portal and was deliberately preserved byte-for-byte when URLs moved.
-// It remains the only temporary canonical exception; every new page must have an exact canonical.
-const legacyCanonicalException=new Set(['firmakoeb.html']);
 const official=/(skat\.dk|info\.skat\.dk|erhvervsstyrelsen\.dk|virksomhedsguiden\.dk)/i;
 let partnerLinks=0;
 
@@ -21,9 +18,7 @@ for(const url of urls){
   const html=fs.readFileSync(rel,'utf8');
   assert(/<title>[^<]+<\/title>/i.test(html),`${rel}: title missing`);
   assert(/<meta\s+name=["']description["']/i.test(html),`${rel}: meta description missing`);
-  if(!legacyCanonicalException.has(rel)){
-    assert(html.includes(`rel="canonical" href="${url}"`)||html.includes(`rel='canonical' href='${url}'`),`${rel}: canonical mismatch`);
-  }
+  assert(html.includes(`rel="canonical" href="${url}"`)||html.includes(`rel='canonical' href='${url}'`),`${rel}: canonical mismatch`);
   if(!infoPages.has(rel)) assert(official.test(html),`${rel}: no primary official source domain`);
 
   if(/partner-ads\.com/i.test(html)){
@@ -42,6 +37,11 @@ assert.equal(urls.length,20,'expected 20 public URLs after PMV release');
 const index=fs.readFileSync('index.html','utf8');
 assert(/name=["']google-site-verification["']/i.test(index),'Google Search Console verification must remain on the homepage');
 assert(/15 gratis værktøjer/i.test(index),'portal tool count must stay in sync');
+const purchase=fs.readFileSync('firmakoeb.html','utf8');
+assert(/108 %-saldo/i.test(purchase),'firm-purchase page must disclose the 2025-2026 enhanced green basis');
+assert(/16\.900 kr\./i.test(purchase),'firm-purchase page must disclose mixed-use 2026 limit');
+assert(/Ikke-fradragsberettiget moms/i.test(purchase),'firm-purchase page must keep non-deductible VAT in cost basis');
+assert(!/Ingen affiliate-links er aktive endnu/i.test(purchase),'stale affiliate status must not return');
 const affiliate=fs.readFileSync('affiliate.html','utf8');
 assert(/aktivt affiliate-samarbejde med Dinero/i.test(affiliate),'affiliate disclosure must reflect active Dinero partnership');
 assert(/Beregninger påvirkes aldrig/i.test(affiliate),'affiliate independence rule missing');
@@ -49,4 +49,4 @@ const privacy=fs.readFileSync('privatliv.html','utf8');
 assert(/Partner-Ads/i.test(privacy),'privacy page must describe Partner-Ads click boundary');
 assert(partnerLinks>=1,'at least one contextual Dinero affiliate link expected');
 
-console.log(`compliance-test: ${urls.length} public URLs checked; ${partnerLinks} affiliate link(s) compliant; 1 documented legacy canonical exception`);
+console.log(`compliance-test: ${urls.length} public URLs checked; ${partnerLinks} affiliate link(s) compliant; all canonicals required`);

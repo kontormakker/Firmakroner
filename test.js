@@ -1,23 +1,50 @@
-const assert=(c,m)=>{if(!c)throw new Error(m)};
-function calc({gross=10000,rate=25,vatRegistered=true,vatDeduct=100,taxDeduct=100,taxRate=40,type='asset',deprRate=25}={}){
- const vatPart=rate?gross*rate/(100+rate):0;
- const vatBack=vatPart*(vatRegistered?vatDeduct/100:0);
- const afterVat=gross-vatBack;
- const thresholdBasis=vatRegistered?gross-vatPart:gross;
- const mixedUseAsset=type==='asset'&&taxDeduct<100;
- const overThreshold=type==='asset'&&!mixedUseAsset&&thresholdBasis>36000;
- const deductibleBase=afterVat*(taxDeduct/100);
- const taxBase=mixedUseAsset?0:(overThreshold?deductibleBase*(deprRate/100):deductibleBase);
- const taxSave=taxBase*(taxRate/100);
- return{vatPart,vatBack,afterVat,thresholdBasis,mixedUseAsset,overThreshold,taxBase,taxSave,effective:afterVat-taxSave};
-}
-const near=(a,b)=>Math.abs(a-b)<.01;let n=0,r;
-r=calc();assert(near(r.vatPart,2000),'VAT extraction');assert(near(r.afterVat,8000),'after VAT');assert(near(r.taxSave,3200),'tax scenario');assert(near(r.effective,4800),'effective scenario');n++;
-r=calc({vatRegistered:false});assert(near(r.vatBack,0),'no VAT deduction');assert(near(r.afterVat,10000),'gross stays');n++;
-r=calc({vatDeduct:50,taxDeduct:50});assert(near(r.vatBack,1000),'partial VAT');assert(r.mixedUseAsset,'mixed-use detected');assert(near(r.taxSave,0),'mixed-use tax paused');n++;
-r=calc({gross:45000});assert(!r.overThreshold,'45k gross equals 36k net, not over');n++;
-r=calc({gross:45001});assert(r.overThreshold,'just over 36k net');n++;
-r=calc({gross:50000,deprRate:25});assert(near(r.taxBase,10000),'25% first-year depreciation base');assert(near(r.taxSave,4000),'large asset first-year tax effect');n++;
-r=calc({gross:50000,deprRate:10});assert(near(r.taxBase,4000),'10% depreciation');n++;
-r=calc({gross:50000,type:'expense'});assert(!r.overThreshold,'expense bypasses asset threshold');assert(r.taxSave>10000,'expense scenario');n++;
-console.log(`${n}/8 tests passed`);
+const assert=require('assert');
+const {calculate,SMALL_ASSET_LIMIT_2026,MIXED_ASSET_LIMIT_2026,GREEN_FACTOR_2025_2026}=require('./firmakoeb-lib.js');
+const near=(a,b)=>assert.ok(Math.abs(a-b)<0.01,`${a} != ${b}`);
+let n=0,r;
+
+assert.equal(SMALL_ASSET_LIMIT_2026,36000);assert.equal(MIXED_ASSET_LIMIT_2026,16900);assert.equal(GREEN_FACTOR_2025_2026,1.08);n++;
+
+r=calculate({gross:10000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,taxRatePct:40,type:'asset',deprRatePct:25});
+near(r.vatPart,2000);near(r.vatDeduction,2000);near(r.costAfterVat,8000);near(r.taxBase,8000);near(r.taxSaving,3200);near(r.firstYearScenarioCost,4800);assert.equal(r.treatment,'small-asset');n++;
+
+r=calculate({gross:10000,vatRate:25,vatRegistered:false,vatDeductPct:100,taxDeductPct:100,taxRatePct:40,type:'asset'});
+near(r.vatDeduction,0);near(r.costAfterVat,10000);near(r.taxBase,10000);n++;
+
+r=calculate({gross:45000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:25});
+near(r.costAfterVat,36000);assert(r.ordinarySmallAsset);near(r.taxBase,36000);n++;
+
+r=calculate({gross:45001,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:25});
+assert(r.ordinaryLargeAsset);near(r.taxBase,r.costAfterVat*0.25);n++;
+
+// Non-deductible VAT stays in acquisition cost. With only 50% VAT deduction, 45k gross becomes 40.5k tax basis, not 36k.
+r=calculate({gross:45000,vatRate:25,vatRegistered:true,vatDeductPct:50,taxDeductPct:100,type:'asset',deprRatePct:25});
+near(r.vatPart,9000);near(r.vatDeduction,4500);near(r.costAfterVat,40500);assert(r.ordinaryLargeAsset);near(r.taxBase,10125);n++;
+
+r=calculate({gross:50000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:75,type:'asset',taxRatePct:40});
+assert(r.mixedUseAsset);assert.equal(r.treatment,'mixed-paused');near(r.taxBase,0);near(r.taxSaving,0);n++;
+
+r=calculate({gross:50000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:10,taxRatePct:40});
+near(r.costAfterVat,40000);near(r.taxBase,4000);near(r.taxSaving,1600);n++;
+
+const greenBase={gross:125000,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset',deprRatePct:25,taxRatePct:40,greenRequested:true,greenInPeriod:true,greenFactoryNew:true,greenElectricOrBattery:true,greenExcludedType:false,greenFossilCapable:false};
+r=calculate(greenBase);
+assert(r.greenEligible&&r.greenApplied&&r.greenConditions.noImmediateWriteOff);near(r.costAfterVat,100000);near(r.greenEnhancedBasis,108000);near(r.taxBase,27000);near(r.ordinaryTaxBase,25000);near(r.greenVsOrdinaryFirstYear,2000);near(r.taxSaving,10800);n++;
+
+r=calculate({...greenBase,greenExcludedType:true});
+assert(!r.greenEligible&&!r.greenApplied);near(r.taxBase,25000);n++;
+
+r=calculate({...greenBase,taxDeductPct:80});
+assert(!r.greenEligible);assert.equal(r.treatment,'mixed-paused');near(r.taxBase,0);n++;
+
+// Under the small-asset limit, enhanced saldo can have a higher lifetime basis but a lower first-year deduction than ordinary immediate deduction.
+r=calculate({...greenBase,gross:12500});
+near(r.costAfterVat,10000);near(r.ordinaryTaxBase,10000);near(r.greenFirstYearTaxBase,2700);near(r.taxBase,2700);assert(r.greenVsOrdinaryFirstYear<0);n++;
+
+r=calculate({gross:12500,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:60,type:'expense',taxRatePct:40});
+near(r.costAfterVat,10000);near(r.taxBase,6000);near(r.taxSaving,2400);assert.equal(r.treatment,'expense');n++;
+
+r=calculate({gross:-100,vatRate:25,vatRegistered:true,vatDeductPct:100,taxDeductPct:100,type:'asset'});
+near(r.gross,0);near(r.costAfterVat,0);near(r.taxBase,0);n++;
+
+console.log(`firmakoeb: ${n}/14 audited tests passed`);

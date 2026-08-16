@@ -26,9 +26,11 @@ dump(){ "$CHROME" $FLAGS --dump-dom "http://127.0.0.1:4173/$1" > "$2"; }
 dump '' /tmp/portal.html; grep -q 'Små virksomhedstal i almindelige kroner' /tmp/portal.html; grep -q '15 gratis værktøjer' /tmp/portal.html; grep -q 'google-site-verification' /tmp/portal.html
 for href in firmakoeb.html momsregistrering-under-50000.html faktura-buffer.html udgifter-foer-opstart.html koersel-privat-bil.html telefon-internet.html reklame-eller-repraesentation.html hjemmekontor-fradrag.html kursus-eller-uddannelse-fradrag.html arbejdstoej-fradrag.html software-fra-udlandet-moms.html faktura-krav-tjek.html skal-jeg-bogfoere-digitalt-2026.html hobby-eller-erhverv.html pmv-eller-enkeltmandsvirksomhed.html satser-2026.html; do grep -q "$href" /tmp/portal.html; done
 
-dump firmakoeb.html /tmp/purchase.html; grep -q '4.800' /tmp/purchase.html; grep -q '8.000' /tmp/purchase.html
+dump firmakoeb.html /tmp/purchase.html; grep -q '4.800' /tmp/purchase.html; grep -q '8.000' /tmp/purchase.html; grep -q '108 %-saldo' /tmp/purchase.html; grep -q '16.900 kr.' /tmp/purchase.html
 dump '?p=10000&v=25&vr=1&vd=100&td=75&tr=40&t=asset&d=25' /tmp/legacy.html; grep -q 'Skatteestimat sat på pause' /tmp/legacy.html
-dump 'firmakoeb.html?p=50000&v=25&vr=1&vd=100&td=100&tr=40&t=asset&d=25' /tmp/large.html; grep -q 'Første års afskrivning i estimat' /tmp/large.html
+dump 'firmakoeb.html?p=50000&v=25&vr=1&vd=100&td=100&tr=40&t=asset&d=25' /tmp/large.html; grep -q 'Første års afskrivning i estimat' /tmp/large.html; grep -q '40.000' /tmp/large.html
+dump 'firmakoeb.html?p=45000&v=25&vr=1&vd=50&td=100&tr=40&t=asset&d=25' /tmp/partial-vat.html; grep -q '40.500' /tmp/partial-vat.html; grep -q '10.125' /tmp/partial-vat.html
+dump 'firmakoeb.html?p=125000&v=25&vr=1&vd=100&td=100&tr=40&t=asset&d=25&g=1&gp=1&gn=1&ge=1&gx=0&gf=0' /tmp/green.html; grep -q '108.000' /tmp/green.html; grep -q '27.000' /tmp/green.html; grep -q '108 %-saldo anvendt' /tmp/green.html
 dump momsregistrering-under-50000.html /tmp/vat.html; grep -q '4.000' /tmp/vat.html; grep -q 'mindst 2 kalenderår' /tmp/vat.html
 dump faktura-buffer.html /tmp/buffer.html; grep -q '4.200' /tmp/buffer.html; grep -q 'Du vælger selv skattebufferen' /tmp/buffer.html
 dump udgifter-foer-opstart.html /tmp/startup.html; grep -q 'Muligt · skal vurderes' /tmp/startup.html; grep -q '6 måneder er ikke en automatisk godkendelse' /tmp/startup.html
