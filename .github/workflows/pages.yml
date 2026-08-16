@@ -129,7 +129,8 @@ jobs:
           assert 'google-site-verification' in home, 'Search Console verification missing from live homepage'
           digital=fetch('https://kontormakker.github.io/Firmakroner/skal-jeg-bogfoere-digitalt-2026.html')
           assert 'Reklame · reklamelink for Dinero' in digital, 'Dinero disclosure missing live'
-          assert 'partnerConsent' in digital and 'data-affiliate-url' in digital, 'affiliate consent gate missing live'
+          assert 'partnerConsent' in digital and 'data-affiliate-url' in digital, 'Dinero affiliate consent gate missing live'
+          assert 'partnerid=57323' in digital and 'bannerid=50128' in digital, 'Dinero issued tracking markers missing live'
           cvr=fetch('https://kontormakker.github.io/Firmakroner/skjul-hjemmeadresse-cvr.html')
           assert 'virksomhedsadresser altid skal offentliggøres' in cvr, 'CVR publication guard missing live'
           bank=fetch('https://kontormakker.github.io/Firmakroner/skal-jeg-have-erhvervskonto.html')
@@ -138,7 +139,10 @@ jobs:
           lei=fetch('https://kontormakker.github.io/Firmakroner/skal-jeg-have-lei-kode.html')
           assert 'Skal du have en LEI-kode?' in lei, 'LEI checker missing live'
           assert 'Ingen bagatelgrænse' in lei and 'finanstilsynet.dk' in lei and 'derivater' in lei, 'LEI rule/source guards missing live'
-          print(f'live-page-gate: {len(urls)} sitemap pages returned 200 with canonical; critical markers present')
+          assert 'Reklame · reklamelink for LEI Service DK' in lei, 'LEI Service disclosure missing live'
+          assert 'leiPartnerConsent' in lei and 'data-affiliate-url' in lei, 'LEI affiliate consent gate missing live'
+          assert 'partnerid=57323' in lei and 'bannerid=85033' in lei, 'LEI issued tracking markers missing live'
+          print(f'live-page-gate: {len(urls)} sitemap pages returned 200 with canonical; critical rule + affiliate markers present')
           PY
 
       - name: Notify IndexNow after successful deploy
