@@ -25,19 +25,19 @@
 <div class="field"><label for="type">Hvilken type udgift er det?</label><select id="type"><option value="restaurant">Restaurant med kunde/forretningsforbindelse</option><option value="representation">Anden repræsentation, fx kundegave</option><option value="advertising">Reklame/markedsføring mod en ubestemt kreds</option></select><small>Værktøjet klassificerer ikke en tvivlsom udgift for dig. Det viser konsekvensen af den kategori, du vælger.</small></div>
 <div class="field"><label for="vatRate">Moms på bilaget</label><select id="vatRate"><option value="25">25 %</option><option value="0">0 % / ingen moms</option></select></div>
 <label class="check"><input id="vatRegistered" type="checkbox" checked><span><b>Virksomheden er momsregistreret</b><br>Ellers beregnes intet momsfradrag.</span></label>
-<label class="check"><input id="businessConnection" type="checkbox" checked><span><b>Restaurantudgiften vedrører en forretningsforbindelse</b><br>SKATs aktuelle momsvejledning angiver 100 % momsfradrag på restaurantudgifter, virksomheden afholder for forretningsforbindelser. Andre restaurant-situationer har andre regler, som dette værktøj ikke gætter på.</span></label>
+<label class="check"><input id="businessConnection" type="checkbox" checked><span><b>Restaurantudgiften er strengt erhvervsmæssig og vedrører en forretningsforbindelse</b><br>Ved egentlige restaurationsydelser bruger værktøjet momslovens begrænsning: 25 % af momsen kan fradrages, når udgiften er strengt erhvervsmæssig.</span></label>
 </div>
 <div class="card">
 <h2>Resultat</h2>
 <div class="metric"><b>Moms på bilaget</b><strong id="vat">100,00 kr.</strong></div>
-<div class="metric"><b>Momsfradrag i dette scenario</b><strong id="vatDeduction">100,00 kr.</strong></div>
-<div class="metric"><b>Udgift efter momsfradrag</b><strong id="expenseBase">400,00 kr.</strong></div>
-<div class="metric"><b>Skattemæssigt fradrag</b><strong id="taxDeduction">100,00 kr.</strong></div>
+<div class="metric"><b>Momsfradrag i dette scenario</b><strong id="vatDeduction">25,00 kr.</strong></div>
+<div class="metric"><b>Udgift efter momsfradrag</b><strong id="expenseBase">475,00 kr.</strong></div>
+<div class="metric"><b>Skattemæssigt fradrag</b><strong id="taxDeduction">118,75 kr.</strong></div>
 <div id="status" class="status"></div>
 <div class="warn"><b>Fradrag er ikke det samme som penge tilbage.</b> Et skattemæssigt fradrag på fx 100 kr. betyder, at den skattepligtige indkomst kan blive reduceret med 100 kr. — ikke at du får 100 kr. udbetalt.</div>
 </div>
 </section>
-<div class="source"><b>Regler brugt i værktøjet.</b> Skattestyrelsen beskriver reklameudgifter som fuldt fradragsberettigede, mens repræsentationsudgifter kun kan fratrækkes med 25 %. På sin aktuelle momsvejledning skriver Skattestyrelsen, at restaurantudgifter afholdt for forretningsforbindelser kan give 100 % momsfradrag. Derfor bliver et kundemåltid og en annonce stadig behandlet forskelligt skattemæssigt, selv når momsen kan trækkes fuldt fra. <a href="https://skat.dk/erhverv/egen-virksomhed/fradrag-for-virksomhedens-udgifter" rel="noopener">Skattefradrag</a> · <a href="https://skat.dk/erhverv/moms/fradrag-for-moms/udgifter-du-kan-faa-momsfradrag-for/momsfradrag-for-forplejning-og-hotel" rel="noopener">Moms på forplejning</a>. Klassifikationen mellem reklame og repræsentation kan bero på konkrete forhold.</div>
+<div class="source"><b>Regler brugt i værktøjet.</b> SKAT beskriver reklameudgifter som fuldt fradragsberettigede, mens repræsentationsudgifter skattemæssigt kun kan fratrækkes med 25 %. For egentlige restaurationsydelser fastslår momslovens § 42, stk. 2 og Den juridiske vejledning, at 25 % af købsmomsen kan fradrages, når udgiften er af strengt erhvervsmæssig karakter. Den ikke-fradragne del af momsen indgår herefter i repræsentationsudgiften, som fortsat er underlagt 25 %-begrænsningen. <a href="https://skat.dk/erhverv/egen-virksomhed/fradrag-for-virksomhedens-udgifter" rel="noopener">SKAT om reklame og repræsentation</a> · <a href="https://info.skat.dk/data.aspx?oid=2085707" rel="noopener">Den juridiske vejledning om restaurationsydelser</a> · <a href="https://info.skat.dk/data.aspx?oid=2083513" rel="noopener">Den juridiske vejledning med repræsentationseksempel</a>. Klassifikationen mellem reklame og repræsentation kan bero på konkrete forhold.</div>
 <footer class="footer">FirmaKroner er et screenings- og beregningsværktøj — ikke skatte-, revisions- eller juridisk rådgivning.</footer>
 </main>
 <script src="reklame-repraesentation-lib.js"></script>
@@ -52,8 +52,8 @@ function render(){
  document.getElementById('taxDeduction').textContent=fmt(r.incomeTaxDeduction);
  const s=document.getElementById('status');
  if(type==='advertising') s.innerHTML='<b>Reklame-scenario.</b><br>Udgiften behandles som markedsføring mod en ubestemt kreds. Skattemæssigt fradrag er 100 % af udgiften efter et eventuelt momsfradrag.';
- else if(type==='restaurant' && document.getElementById('businessConnection').checked) s.innerHTML='<b>Repræsentation på restaurant for en forretningsforbindelse.</b><br>Skattefradraget er begrænset til 25 % af udgiften efter momsfradrag. Hvis du er momsregistreret, bruger værktøjet SKATs aktuelle 100 %-momsregel for denne konkrete restaurantcase.';
- else if(type==='restaurant') s.innerHTML='<b>Restaurantcase uden markeret forretningsforbindelse.</b><br>Skattefradraget vises konservativt som 25 % repræsentation, men værktøjet sætter momsfradraget til 0 i stedet for at gætte på en anden restaurantregel.';
+ else if(type==='restaurant' && document.getElementById('businessConnection').checked) s.innerHTML='<b>Repræsentation på restaurant for en forretningsforbindelse.</b><br>Ved et strengt erhvervsmæssigt restaurantbesøg bruger værktøjet 25 % fradrag af købsmomsen. Det skattemæssige repræsentationsfradrag er derefter 25 % af udgiften inklusive den moms, der ikke kunne fradrages.';
+ else if(type==='restaurant') s.innerHTML='<b>Restaurantcase uden markeret strengt erhvervsmæssig forretningsforbindelse.</b><br>Værktøjet sætter momsfradraget til 0 i stedet for at antage, at betingelserne for restaurationsfradrag er opfyldt. Det skattemæssige scenario vises som 25 % repræsentation.';
  else s.innerHTML='<b>Anden repræsentation.</b><br>Værktøjet bruger 25 % skattemæssigt fradrag og beregner ikke momsfradrag for fx en almindelig repræsentationsgave.';
  document.getElementById('businessConnection').disabled=type!=='restaurant';
 }
