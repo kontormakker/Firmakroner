@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kan jeg skjule min hjemmeadresse i CVR? | FirmaKroner</title>
+<meta name="description" content="Gratis CVR-adressetjek: Se om adressebeskyttelse, reklamebeskyttelse eller en separat virksomhedsadresse løser dit problem, hvis du driver virksomhed hjemmefra.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://kontormakker.github.io/Firmakroner/skjul-hjemmeadresse-cvr.html">
+<meta name="theme-color" content="#173c2a">
+<style>
+:root{--bg:#f4f5f1;--card:#fff;--text:#162019;--muted:#667069;--line:#dfe4dd;--soft:#e8efe9;--amber:#fff5d8;--blue:#eef4f7}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}a{color:inherit}.wrap{max-width:980px;margin:auto;padding:24px 18px 64px}.nav{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:42px}.brand{font-size:21px;font-weight:900;letter-spacing:-.04em;text-decoration:none}.back{font-size:13px;color:var(--muted)}.pill{font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:#50705c;margin-bottom:10px}h1{font-size:clamp(38px,7vw,65px);line-height:.98;letter-spacing:-.055em;margin:0 0 16px}.lead{font-size:18px;line-height:1.6;color:var(--muted);max-width:800px;margin:0 0 30px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}.card h2{font-size:20px;letter-spacing:-.03em;margin:0 0 18px}.choices{display:grid;gap:10px}.choice{display:flex;gap:10px;align-items:flex-start;padding:13px;border:1px solid var(--line);border-radius:12px;cursor:pointer}.choice input{margin-top:3px}.choice span{font-size:13px;line-height:1.5}.check{display:flex;gap:10px;align-items:flex-start;padding:13px;border:1px solid var(--line);border-radius:12px;margin-top:12px}.check input{margin-top:3px}.check span{font-size:13px;line-height:1.5}.status{border-radius:14px;padding:17px;background:var(--soft);font-size:13px;line-height:1.65}.status strong{display:block;font-size:20px;line-height:1.15;margin-bottom:7px}.status.free{background:var(--amber);color:#574a1f}.status.google{background:var(--blue);color:#294653}.steps{margin-top:15px;display:grid;gap:9px}.step{padding:13px;border:1px solid var(--line);border-radius:12px;background:#fafbf8;font-size:12px;line-height:1.55}.step b{display:block;margin-bottom:3px}.explain{margin-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.mini{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px}.mini h2{font-size:16px;margin:0 0 7px}.mini p{font-size:12px;color:var(--muted);line-height:1.6;margin:0}.sources{border-top:1px solid var(--line);padding-top:18px;margin-top:25px;color:var(--muted);font-size:12px;line-height:1.75}.sources a{text-decoration:underline}.footer{border-top:1px solid var(--line);padding-top:18px;margin-top:38px;color:var(--muted);font-size:12px}@media(max-width:760px){.grid,.explain{grid-template-columns:1fr}.nav{align-items:flex-start}h1{font-size:44px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<nav class="nav"><a class="brand" href="./">FirmaKroner</a><a class="back" href="./">← Alle værktøjer</a></nav>
+<div class="pill">Værktøj 16 · CVR & privatliv</div>
+<h1>Kan du skjule din hjemmeadresse i CVR?</h1>
+<p class="lead">Det afhænger af, hvad du egentlig prøver at løse. Virksomhedsadresse, CPR-adressebeskyttelse, reklamebeskyttelse og Google-profil er fire forskellige ting.</p>
+<section class="grid">
+<div class="card">
+<h2>Hvad vil du opnå?</h2>
+<div class="choices">
+<label class="choice"><input type="radio" name="goal" value="privacy" checked><span><b>Jeg vil ikke have min hjemmeadresse vist som virksomhedsadresse</b><br>Fx fordi jeg driver virksomhed hjemmefra og ønsker mere privatliv.</span></label>
+<label class="choice"><input type="radio" name="goal" value="marketing"><span><b>Jeg vil bare have færre salgsopkald og reklamer</b><br>Adressen må gerne være offentlig.</span></label>
+<label class="choice"><input type="radio" name="goal" value="google"><span><b>Jeg vil skjule adressen på Google</b><br>Fx fordi jeg kører ud til kunder og ikke har kundebesøg hjemme.</span></label>
+</div>
+<label class="check"><input id="businessAtHome" type="checkbox" checked><span><b>Virksomhedens registrerede adresse er min hjemmeadresse</b></span></label>
+<label class="check"><input id="cprProtected" type="checkbox"><span><b>Jeg har navne- og adressebeskyttelse i CPR</b></span></label>
+</div>
+<div class="card">
+<h2>Dit resultat</h2>
+<div id="status" class="status"></div>
+<div id="steps" class="steps"></div>
+</div>
+</section>
+<section class="explain">
+<div class="mini"><h2>Virksomhedsadresse</h2><p>Virksomhedens adresse er en CVR-oplysning. Hvis den er identisk med din bopæl, kan bopælen derfor blive synlig som virksomhedens adresse.</p></div>
+<div class="mini"><h2>Reklamebeskyttelse</h2><p>Gratis CVR-reklamebeskyttelse begrænser brug af CVR-grunddata til direkte markedsføring. Den skjuler ikke selve virksomhedsadressen.</p></div>
+<div class="mini"><h2>Google er separat</h2><p>En udekørende servicevirksomhed kan skjule adressen på Google Virksomhedsprofil. Det ændrer ikke CVR.</p></div>
+</section>
+<div class="sources"><b>Kilder og afgrænsning.</b> Erhvervsstyrelsen oplyser, at CVR indeholder virksomhedens navn og adresse, og at reklamebeskyttelse vedrører brugen af CVR-data til direkte markedsføring. Virks officielle FAQ om ejeroplysninger præciserer, at virksomhedsadresser altid skal offentliggøres, også når de er sammenfaldende med en privatadresse med CPR-beskyttelse. Datatilsynet beskriver samme skel. Google har særskilte regler for serviceområdevirksomheder. <a href="https://erhvervsstyrelsen.dk/det-centrale-virksomhedsregister-cvr" target="_blank" rel="noopener">Erhvervsstyrelsen om CVR</a> · <a href="https://virksomhedsguiden.dk/content/ydelser/faa-reklamebeskyttet-din-virksomhed-i-cvr/3337006d-3b93-4bb0-bc08-82a0915c0332/" target="_blank" rel="noopener">Gratis reklamebeskyttelse</a> · <a href="https://www.datatilsynet.dk/regler-og-vejledning/medier-registre-og-arkiver" target="_blank" rel="noopener">Datatilsynet om offentlige registre</a> · <a href="https://support.google.com/business/answer/3038177?hl=da" target="_blank" rel="noopener">Google Virksomhedsprofil</a>.</div>
+<footer class="footer">FirmaKroner er et screeningsværktøj — ikke juridisk rådgivning. En anden adresse skal selvfølgelig være en adresse, virksomheden lovligt kan registreres og kontaktes på; værktøjet vurderer ikke konkrete adresseudbydere.</footer>
+</main>
+<script src="cvr-adresse-lib.js"></script>
+<script>
+function render(){
+ const goal=document.querySelector('input[name="goal"]:checked').value;
+ const r=FirmaKronerCvrAddress.assess({goal,businessAtHome:document.getElementById('businessAtHome').checked,cprProtected:document.getElementById('cprProtected').checked});
+ const status=document.getElementById('status');
+ status.className='status'+(r.status==='free-protection'?' free':r.status==='google-only'?' google':'');
+ status.innerHTML='<strong>'+r.title+'</strong>'+r.summary;
+ const steps=document.getElementById('steps');
+ if(r.status==='separate-address') steps.innerHTML='<div class="step"><b>Det gratis først</b>Hvis problemet egentlig er salgsopkald, så brug reklamebeskyttelse i stedet for at betale for en adresse.</div><div class="step"><b>Hvis privatliv er selve målet</b>Du skal have en anden gyldig virksomhedsadresse end bopælen. Kontrollér altid at en konkret løsning faktisk kan bruges til CVR for din virksomhedsform.</div>';
+ else if(r.status==='free-protection') steps.innerHTML='<div class="step"><b>Gratis næste skridt</b>Brug Erhvervsstyrelsens CVR-reklamebeskyttelse. Har du personligt ejet virksomhed, peger Virksomhedsguiden også på Robinsonlisten som ekstra beskyttelse.</div>';
+ else if(r.status==='google-only') steps.innerHTML='<div class="step"><b>På Google</b>Hvis du er en udekørende servicevirksomhed uden kundebetjening på adressen, kan adressen fjernes fra Google-profilen og erstattes af et serviceområde.</div><div class="step"><b>I CVR</b>Det ændrer ikke den registrerede virksomhedsadresse.</div>';
+ else steps.innerHTML='<div class="step"><b>Ingen bopæl som virksomhedsadresse</b>Ud fra dit svar er hjemmeadressen allerede adskilt fra den adresse, virksomheden bruger i CVR.</div>';
+}
+document.querySelectorAll('input').forEach(el=>el.addEventListener('change',render));render();
+</script>
+</body>
+</html>
