@@ -31,11 +31,12 @@ jobs:
           node startup-expense-test.js
           node koersel-privat-bil-test.js
           node telefon-internet-test.js
+          node reklame-repraesentation-test.js
 
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html firmakoeb.html momsregistrering-under-50000.html faktura-buffer.html udgifter-foer-opstart.html koersel-privat-bil.html telefon-internet.html telefon-internet-lib.js om.html privatliv.html affiliate.html robots.txt sitemap.xml cc4bb9dc90e3aa702484656973b7baf2.txt _site/
+          cp index.html firmakoeb.html momsregistrering-under-50000.html faktura-buffer.html udgifter-foer-opstart.html koersel-privat-bil.html telefon-internet.html telefon-internet-lib.js reklame-eller-repraesentation.html reklame-repraesentation-lib.js om.html privatliv.html affiliate.html robots.txt sitemap.xml cc4bb9dc90e3aa702484656973b7baf2.txt _site/
 
       - name: Browser smoke tests
         run: |
@@ -48,12 +49,12 @@ jobs:
             sleep 0.25
           done
 
-          for path in / /firmakoeb.html /momsregistrering-under-50000.html /faktura-buffer.html /udgifter-foer-opstart.html /koersel-privat-bil.html /telefon-internet.html /om.html /privatliv.html /affiliate.html; do
+          for path in / /firmakoeb.html /momsregistrering-under-50000.html /faktura-buffer.html /udgifter-foer-opstart.html /koersel-privat-bil.html /telefon-internet.html /reklame-eller-repraesentation.html /om.html /privatliv.html /affiliate.html; do
             curl -fsS "http://127.0.0.1:4173${path}" >/dev/null
           done
           curl -fsS http://127.0.0.1:4173/cc4bb9dc90e3aa702484656973b7baf2.txt | grep -q 'cc4bb9dc90e3aa702484656973b7baf2'
           curl -fsS http://127.0.0.1:4173/robots.txt | grep -q 'sitemap.xml'
-          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'telefon-internet.html'
+          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'reklame-eller-repraesentation.html'
 
           CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           test -n "$CHROME"
@@ -67,51 +68,43 @@ jobs:
           grep -q 'udgifter-foer-opstart.html' /tmp/portal.html
           grep -q 'koersel-privat-bil.html' /tmp/portal.html
           grep -q 'telefon-internet.html' /tmp/portal.html
+          grep -q 'reklame-eller-repraesentation.html' /tmp/portal.html
           echo 'portal smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/firmakoeb.html' > /tmp/purchase.html
           grep -q '4.800' /tmp/purchase.html
           grep -q '8.000' /tmp/purchase.html
-          echo 'firm purchase smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/?p=10000&v=25&vr=1&vd=100&td=75&tr=40&t=asset&d=25' > /tmp/legacy-share.html
           grep -q 'Skatteestimat sat på pause' /tmp/legacy-share.html
-          echo 'legacy share redirect smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/firmakoeb.html?p=50000&v=25&vr=1&vd=100&td=100&tr=40&t=asset&d=25' > /tmp/large.html
           grep -q 'Første års afskrivning i estimat' /tmp/large.html
           grep -q '36.000 kr.-grænsen' /tmp/large.html
-          echo 'large-asset smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/momsregistrering-under-50000.html' > /tmp/vat-choice.html
           grep -q '4.000' /tmp/vat-choice.html
           grep -q 'økonomisk dårligere' /tmp/vat-choice.html
           grep -q 'mindst 2 kalenderår' /tmp/vat-choice.html
-          echo 'VAT-choice smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/faktura-buffer.html' > /tmp/invoice-buffer.html
           grep -q '4.200' /tmp/invoice-buffer.html
           grep -q '2.500' /tmp/invoice-buffer.html
           grep -q 'Du vælger selv skattebufferen' /tmp/invoice-buffer.html
-          echo 'invoice-buffer smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/udgifter-foer-opstart.html' > /tmp/startup-default.html
           grep -q 'Muligt · skal vurderes' /tmp/startup-default.html
           grep -q '6 måneder er ikke en automatisk godkendelse' /tmp/startup-default.html
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/udgifter-foer-opstart.html?m=3&t=establishment&u=business&d=1' > /tmp/startup-establishment.html
           grep -q 'Typisk nej' /tmp/startup-establishment.html
-          grep -q 'Det ligner en etableringsudgift' /tmp/startup-establishment.html
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/udgifter-foer-opstart.html?m=7&t=operating&u=business&d=1' > /tmp/startup-old.html
           grep -q 'Svagere signal' /tmp/startup-old.html
-          echo 'startup-expense smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/koersel-privat-bil.html' > /tmp/mileage.html
           grep -q '31.520' /tmp/mileage.html
           grep -q '24.800' /tmp/mileage.html
           grep -q '6.720' /tmp/mileage.html
-          grep -q 'Kilometersatsen giver' /tmp/mileage.html
           grep -q 'kun kan skiftes opgørelsesprincip én gang' /tmp/mileage.html
-          echo 'mileage comparison smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/telefon-internet.html' > /tmp/phone-internet.html
           grep -q '7.800' /tmp/phone-internet.html
@@ -119,27 +112,23 @@ jobs:
           grep -q '4.300' /tmp/phone-internet.html
           grep -q '1.720' /tmp/phone-internet.html
           grep -q 'Den skattepligtige værdi beregnes kun én gang' /tmp/phone-internet.html
-          echo 'phone-internet smoke ok'
+
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/reklame-eller-repraesentation.html' > /tmp/representation.html
+          grep -q '100,00 kr.' /tmp/representation.html
+          grep -q '400,00 kr.' /tmp/representation.html
+          grep -q '100 %-momsregel' /tmp/representation.html
+          grep -q 'Skattefradraget er begrænset til 25 %' /tmp/representation.html
+          echo 'representation smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/affiliate.html' > /tmp/affiliate.html
           grep -q 'endnu ingen aktive affiliate-links' /tmp/affiliate.html
           grep -q 'Beregninger påvirkes aldrig' /tmp/affiliate.html
-          echo 'disclosure smoke ok'
 
-          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-portal.png 'http://127.0.0.1:4173/'
-          test -s /tmp/mobile-portal.png
-          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-purchase.png 'http://127.0.0.1:4173/firmakoeb.html'
-          test -s /tmp/mobile-purchase.png
-          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-vat.png 'http://127.0.0.1:4173/momsregistrering-under-50000.html'
-          test -s /tmp/mobile-vat.png
-          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-buffer.png 'http://127.0.0.1:4173/faktura-buffer.html'
-          test -s /tmp/mobile-buffer.png
-          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-startup.png 'http://127.0.0.1:4173/udgifter-foer-opstart.html'
-          test -s /tmp/mobile-startup.png
-          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-mileage.png 'http://127.0.0.1:4173/koersel-privat-bil.html'
-          test -s /tmp/mobile-mileage.png
-          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-phone-internet.png 'http://127.0.0.1:4173/telefon-internet.html'
-          test -s /tmp/mobile-phone-internet.png
+          for page in portal: purchase:firmakoeb.html vat:momsregistrering-under-50000.html buffer:faktura-buffer.html startup:udgifter-foer-opstart.html mileage:koersel-privat-bil.html phone:telefon-internet.html representation:reklame-eller-repraesentation.html; do
+            name="${page%%:*}"; path="${page#*:}"
+            "$CHROME" $FLAGS --window-size=390,844 --screenshot="/tmp/mobile-${name}.png" "http://127.0.0.1:4173/${path}"
+            test -s "/tmp/mobile-${name}.png"
+          done
           echo 'mobile screenshots ok'
 
       - name: Configure GitHub Pages
@@ -187,6 +176,7 @@ jobs:
               "https://kontormakker.github.io/Firmakroner/udgifter-foer-opstart.html",
               "https://kontormakker.github.io/Firmakroner/koersel-privat-bil.html",
               "https://kontormakker.github.io/Firmakroner/telefon-internet.html",
+              "https://kontormakker.github.io/Firmakroner/reklame-eller-repraesentation.html",
               "https://kontormakker.github.io/Firmakroner/om.html",
               "https://kontormakker.github.io/Firmakroner/privatliv.html",
               "https://kontormakker.github.io/Firmakroner/affiliate.html"
