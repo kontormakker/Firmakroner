@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -Eeuo pipefail
+trap 'rc=$?; echo "BROWSER_SMOKE_FAILURE rc=$rc line=$LINENO command=$BASH_COMMAND" >&2; exit $rc' ERR
 
 python3 -m http.server 4173 --directory _site >/tmp/firmakroner-http.log 2>&1 &
 SERVER_PID=$!
