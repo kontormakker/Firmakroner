@@ -8,7 +8,7 @@ assert.equal(new Set(urls).size,urls.length,'sitemap URLs must be unique');
 
 const prefix='https://kontormakker.github.io/Firmakroner/';
 const infoPages=new Set(['index.html','om.html','privatliv.html','affiliate.html','satser-2026.html']);
-const official=/(skat\.dk|info\.skat\.dk|erhvervsstyrelsen\.dk|virksomhedsguiden\.dk)/i;
+const official=/(skat\.dk|info\.skat\.dk|erhvervsstyrelsen\.dk|virksomhedsguiden\.dk|nemkonto\.dk|finanstilsynet\.dk|retsinformation\.dk)/i;
 const APPROVED_AFFILIATE={brand:'Dinero',network:'Partner-Ads',partnerId:'57323',bannerId:'50128'};
 let issuedAffiliateLinks=0;
 
@@ -22,8 +22,6 @@ for(const url of urls){
   assert(html.includes(`rel="canonical" href="${url}"`)||html.includes(`rel='canonical' href='${url}'`),`${rel}: canonical mismatch`);
   if(!infoPages.has(rel)) assert(official.test(html),`${rel}: no primary official source domain`);
 
-  // Informational Partner-Ads links (for example the terms page) are not affiliate clicks.
-  // Only the issued klikbanner URL is monetized and must satisfy the stronger advertising/consent rules.
   const directTrackingAnchors=[...html.matchAll(/<a\b[^>]*href=["']([^"']*partner-ads\.com\/[^"']*klikbanner\.php[^"']*)["'][^>]*>/gi)];
   assert.equal(directTrackingAnchors.length,0,`${rel}: Partner-Ads tracking URL must not be active in href before consent`);
 
@@ -49,15 +47,21 @@ for(const url of urls){
   assert(!/<(?:img|iframe)[^>]+partner-ads\.com/i.test(html),`${rel}: no Partner-Ads pixel/banner embeds allowed`);
 }
 
-assert.equal(urls.length,21,'expected 21 public URLs after CVR privacy release');
+assert.equal(urls.length,22,'expected 22 public URLs after business account checker release');
 const index=fs.readFileSync('index.html','utf8');
 assert(/name=["']google-site-verification["']/i.test(index),'Google Search Console verification must remain on the homepage');
-assert(/16 gratis værktøjer/i.test(index),'portal tool count must stay in sync');
+assert(/17 gratis værktøjer/i.test(index),'portal tool count must stay in sync');
 assert(/skjul-hjemmeadresse-cvr\.html/i.test(index),'CVR privacy checker must be discoverable from portal');
+assert(/skal-jeg-have-erhvervskonto\.html/i.test(index),'business account checker must be discoverable from portal');
 const cvr=fs.readFileSync('skjul-hjemmeadresse-cvr.html','utf8');
 assert(/virksomhedsadresser altid skal offentliggøres/i.test(cvr),'CVR privacy page must state the public business-address rule');
 assert(/reklamebeskyttelse/i.test(cvr),'CVR privacy page must surface the free anti-marketing option');
 assert(!/partner-ads\.com/i.test(cvr),'CVR privacy page must remain non-commercial before program approval');
+const bank=fs.readFileSync('skal-jeg-have-erhvervskonto.html','utf8');
+assert(/NemKonto og en betalt erhvervskonto er ikke det samme/i.test(fs.readFileSync('erhvervskonto-lib.js','utf8')),'business account logic must preserve NemKonto/product distinction');
+assert(/10 arbejdsdage/i.test(bank),'business account page must disclose the basic-account decision deadline');
+assert(/nemkonto\.dk/i.test(bank)&&/finanstilsynet\.dk/i.test(bank)&&/retsinformation\.dk/i.test(bank),'business account page must retain primary official sources');
+assert(!/partner-ads\.com/i.test(bank),'business account checker must stay non-commercial until a program is actually approved');
 const purchase=fs.readFileSync('firmakoeb.html','utf8');
 assert(/108 %-saldo/i.test(purchase),'firm-purchase page must disclose the 2025-2026 enhanced green basis');
 assert(/16\.900 kr\./i.test(purchase),'firm-purchase page must disclose mixed-use 2026 limit');
