@@ -16,6 +16,7 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 
 - Beregningslogik lægges så vidt muligt i små rene JavaScript-moduler, der kan testes uden browser.
 - Numeriske grænser skal have tests lige under, præcis på og lige over grænsen, når forskellen er juridisk relevant.
+- Ikke-fradragsberettiget moms skal blive i det skattemæssige omkostnings-/anskaffelsesgrundlag; en momsregistrering er ikke det samme som 100 % momsfradrag.
 - Hver release kører alle `*-test.js`, browser-smoke-tests og mobilrenderinger før deploy.
 - Ingen eksisterende formel ændres alene for at forbedre SEO eller affiliate-konvertering.
 
@@ -38,8 +39,8 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 ## 5. Søgemaskiner og drift
 
 - Google Search Console-verifikationstagget på forsiden må ikke fjernes ved senere refaktorering.
-- Hver URL i `sitemap.xml` skal pege på en faktisk offentlig fil. Nye sider skal have korrekt canonical.
-- Den oprindelige `firmakoeb.html` er midlertidigt den eneste dokumenterede canonical-undtagelse, fordi den tidligere blev bevaret byte-for-byte ved portalskiftet; undtagelsen må ikke kopieres til nye sider og skal fjernes i en senere kontrolleret migration.
+- Hver URL i `sitemap.xml` skal pege på en faktisk offentlig fil med korrekt canonical. Der er ikke længere en legacy-undtagelse for `firmakoeb.html`.
+- Gamle delte links via `/?p=...` skal fortsat omdirigeres til `firmakoeb.html` med query-parametrene bevaret.
 - Efter produktion-deploy skal den offentlige `sitemap.xml` hentes og XML-parses, før release-flowet betragtes som fuldt grønt.
 - IndexNow må først køre efter en succesfuld Pages-deploy.
 
@@ -60,16 +61,10 @@ Følgende områder er dobbelttjekket mod aktuelle officielle kilder og den imple
 - **Fakturakrav:** fuld kontra forenklet faktura under 3.000 kr., kundens ret til fuld faktura og nødvendige felter er afgrænset til almindeligt dansk B2B. Status: **bestået**.
 - **Hobby/erhverv:** værktøjet giver signaler, ikke juridisk klassifikation, og hobbyunderskud modregnes ikke i anden indkomst. Status: **bestået**.
 - **Digital bogføring 2026:** over 300.000 kr. i to på hinanden følgende forudgående indkomstår; præcis 300.000 kr. er ikke over; nye virksomheder kan tidligst rammes fra tredje indkomstår. Status: **bestået**.
+- **Firmakøb 2026:** legacy-siden er erstattet med en testbar model. 36.000-kr.-grænsen anvendes på faktisk omkostningsgrundlag efter det momsfradrag, brugeren angiver, så ikke-fradraget moms forbliver i anskaffelsessummen. Blandet brug stopper skatteestimatet og viser 16.900-kr.-særgrænsen. Kvalificerende 108 %-saldo kræver brugerbekræftelse af periode, fabriksnyhed, elektrisk/batteridrift og fravær af de eksplicitte undtagelser; værktøjet viser førsteårs-effekt og gør opmærksom på, at 108 % ikke nødvendigvis giver størst fradrag i købsåret. Gamle query-parametre bevares. Status: **bestået efter migration og rettelse**.
 - **Dinero-reklame:** Dinero beskrives som ét af flere registrerede bogføringssystemer; link markeres som reklame og påvirker ikke resultatet. Status: **bestået**.
-- **Google:** Search Console-verifikation bevares i `index.html`; sitemap valideres lokalt og efter deploy. Status: **bestået i kode, offentlig efter-deploy-gate afventer denne release**.
+- **Google:** Search Console-verifikation bevares i `index.html`; sitemap valideres lokalt og efter deploy. Status: **bestået i kode; offentlig efter-deploy-gate kræves ved hver release**.
 
-## 7. Åben højrisiko-opgave
+## 7. Fortsat auditregel
 
-**Firmakøb** er endnu ikke markeret fuldt bestået. De centrale 2026-grænser og almindelig afskrivning er tidligere kontrolleret, men den bevarede legacy-side skal have en kontrolleret migration, fordi:
-
-1. den mangler canonical og er den eneste midlertidige undtagelse i compliance-gaten,
-2. den indeholder ældre affiliate-status-tekst,
-3. 2026-reglerne om forhøjet 108 % afskrivningsgrundlag for visse kvalificerende fabriksnye grønne driftsmidler skal enten modelleres korrekt eller tydeligt afgrænses,
-4. gamle delte `/?p=...`-links og eksisterende beregninger må ikke brydes under migrationen.
-
-Denne opgave har højere prioritet end at tilføje værktøj #16.
+En grøn auditdato er ikke permanent sandhed. Ved relevante regelændringer, årsskifte eller ny officiel vejledning skal berørte værktøjer genåbnes og genkontrolleres før næste release. Nye værktøjer må ikke nedprioritere vedligeholdelsen af de eksisterende.
