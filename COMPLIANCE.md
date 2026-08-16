@@ -11,6 +11,7 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 - Årstal, beløbsgrænser, satser og perioder skal angives med deres præcise scope. Eksempel: kalenderår er ikke det samme som rullende 12 måneder.
 - Hvis officielle sider ser indbyrdes inkonsistente eller forældede ud, skal værktøjet afgrænses til den regel, der kan dokumenteres sikkert. Den aktuelle lov/Den juridiske vejledning og nyere officiel vejledning vægtes højest.
 - Et værktøj må ikke udlede en juridisk klassifikation, hvis de nødvendige faktiske oplysninger mangler. Det skal i stedet vise signaler, scenarier eller 'uden for denne checker'.
+- `rules-manifest.json` er den maskinlæsbare fortegnelse over hver offentlig regelside, dens risikoniveau, seneste faglige review, næste obligatoriske reviewdato og de primære kildedomæner, der skal være synlige på siden.
 
 ## 2. Beregninger
 
@@ -65,6 +66,12 @@ Følgende områder er dobbelttjekket mod aktuelle officielle kilder og den imple
 - **Dinero-reklame:** Dinero beskrives som ét af flere registrerede bogføringssystemer; link markeres som reklame og påvirker ikke resultatet. Status: **bestået**.
 - **Google:** Search Console-verifikation bevares i `index.html`; sitemap valideres lokalt og efter deploy. Status: **bestået i kode; offentlig efter-deploy-gate kræves ved hver release**.
 
-## 7. Fortsat auditregel
+## 7. Automatisk freshness-lock
+
+`freshness-test.js` sammenholder `rules-manifest.json` med de offentlige regelsider i sitemap'et. En release fejler, hvis en regelside mangler i manifestet, en deklareret primær kildetype ikke længere er synlig på siden, eller reviewdatoen er udløbet. `freshness-policy-test.js` beviser desuden i CI, at 31. december 2026 stadig passerer, mens 1. januar 2027 bliver blokeret, indtil en ny faglig audit bevidst opdaterer manifestet.
+
+Det betyder ikke, at regler automatisk er korrekte frem til udløbsdatoen. Ved en kendt regelændring skal siden genåbnes straks. Låsen er en ekstra sikkerhed mod at 2026-tal ved et uheld bliver genudgivet som aktuelle 2027-tal.
+
+## 8. Fortsat auditregel
 
 En grøn auditdato er ikke permanent sandhed. Ved relevante regelændringer, årsskifte eller ny officiel vejledning skal berørte værktøjer genåbnes og genkontrolleres før næste release. Nye værktøjer må ikke nedprioritere vedligeholdelsen af de eksisterende.
