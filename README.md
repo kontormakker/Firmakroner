@@ -11,7 +11,7 @@ Hvis et spørgsmål ikke kan afgøres sikkert ud fra brugerens svar, skal værkt
 ## 2026-guardrails
 
 - Standard dansk moms: 25 %.
-- Småaktiver/driftsmidler kan efter SKATs generelle regel straksfradrages op til 36.000 kr. i 2026; for momsregistrerede vurderes grænsen ekskl. moms.
+- Småaktiver/driftsmidler kan efter SKATs generelle regel straksfradrages op til 36.000 kr. i 2026. Beregningen bruger det skattemæssige omkostningsgrundlag efter den moms, der faktisk kan fradrages; ikke-fradragsberettiget moms bliver derfor i anskaffelsessummen.
 - Over grænsen bruger firmakøbs-scenariet højst 25 % årlig afskrivning.
 - Delvist privat/erhvervsmæssigt benyttet udstyr har særregler. FirmaKroner stopper derfor skatteestimatet i stedet for at anvende 36.000 kr.-reglen forkert; Den juridiske vejledning angiver en særskilt 2026-grænse på 16.900 kr. for sådanne småaktiver.
 - Særlige regler for bl.a. biler, grønne driftsmidler og virksomhedsordningen dækkes kun, når den konkrete side udtrykkeligt håndterer dem.
