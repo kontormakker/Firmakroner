@@ -10,7 +10,7 @@ const prefix='https://kontormakker.github.io/Firmakroner/';
 const infoPages=new Set(['index.html','om.html','privatliv.html','affiliate.html','satser-2026.html']);
 const official=/(skat\.dk|info\.skat\.dk|erhvervsstyrelsen\.dk|virksomhedsguiden\.dk)/i;
 const APPROVED_AFFILIATE={brand:'Dinero',network:'Partner-Ads',partnerId:'57323',bannerId:'50128'};
-let partnerLinks=0;
+let issuedAffiliateLinks=0;
 
 for(const url of urls){
   assert(url.startsWith(prefix),`unexpected sitemap host/path: ${url}`);
@@ -22,19 +22,31 @@ for(const url of urls){
   assert(html.includes(`rel="canonical" href="${url}"`)||html.includes(`rel='canonical' href='${url}'`),`${rel}: canonical mismatch`);
   if(!infoPages.has(rel)) assert(official.test(html),`${rel}: no primary official source domain`);
 
-  if(/partner-ads\.com/i.test(html)){
-    const links=[...html.matchAll(/<a\b[^>]*href=["']([^"']*partner-ads\.com[^"']*)["'][^>]*>/gi)];
-    partnerLinks+=links.length;
-    for(const match of links){
-      const link=match[0],href=match[1].replace(/&amp;/g,'&');
-      assert(/rel=["'][^"']*sponsored[^"']*nofollow[^"']*noopener[^"']*["']/i.test(link),`${rel}: affiliate link must be sponsored nofollow noopener`);
-      assert(href.includes(`partnerid=${APPROVED_AFFILIATE.partnerId}`),`${rel}: unexpected Partner-Ads partner id`);
-      assert(href.includes(`bannerid=${APPROVED_AFFILIATE.bannerId}`),`${rel}: unexpected Dinero ad id`);
-    }
-    if(links.length) assert(/reklame[^<]{0,80}reklamelink for Dinero/i.test(html)||/reklamelink for Dinero/i.test(html),`${rel}: affiliate link lacks clear advertising label`);
-    assert(!/<script[^>]+partner-ads\.com/i.test(html),`${rel}: no Partner-Ads scripts allowed`);
-    assert(!/<(?:img|iframe)[^>]+partner-ads\.com/i.test(html),`${rel}: no Partner-Ads pixel/banner embeds allowed`);
+  // Informational Partner-Ads links (for example the terms page) are not affiliate clicks.
+  // Only the issued klikbanner URL is monetized and must satisfy the stronger advertising/consent rules.
+  const directTrackingAnchors=[...html.matchAll(/<a\b[^>]*href=["']([^"']*partner-ads\.com\/[^"']*klikbanner\.php[^"']*)["'][^>]*>/gi)];
+  assert.equal(directTrackingAnchors.length,0,`${rel}: Partner-Ads tracking URL must not be active in href before consent`);
+
+  const dataLinks=[...html.matchAll(/<a\b([^>]*)\bdata-affiliate-url=["']([^"']*partner-ads\.com\/[^"']*klikbanner\.php[^"']*)["']([^>]*)>/gi)];
+  issuedAffiliateLinks+=dataLinks.length;
+  for(const match of dataLinks){
+    const attrs=(match[1]+' '+match[3]);
+    const hrefMatch=attrs.match(/\bhref=["']([^"']+)["']/i);
+    const affiliateUrl=match[2].replace(/&amp;/g,'&');
+    assert(hrefMatch,`${rel}: consent-gated affiliate anchor must still have an inert href`);
+    assert(!/partner-ads\.com/i.test(hrefMatch[1]),`${rel}: affiliate href must remain local/inert before consent`);
+    assert(/\btarget=["']_blank["']/i.test(attrs),`${rel}: affiliate link must open in a new tab after consent`);
+    assert(/rel=["'][^"']*sponsored[^"']*nofollow[^"']*noopener[^"']*["']/i.test(attrs),`${rel}: affiliate link must be sponsored nofollow noopener`);
+    assert(affiliateUrl.includes(`partnerid=${APPROVED_AFFILIATE.partnerId}`),`${rel}: unexpected Partner-Ads partner id`);
+    assert(affiliateUrl.includes(`bannerid=${APPROVED_AFFILIATE.bannerId}`),`${rel}: unexpected Dinero ad id`);
+    assert(/reklame[^<]{0,80}reklamelink for Dinero/i.test(html)||/reklamelink for Dinero/i.test(html),`${rel}: affiliate link lacks clear advertising label`);
+    assert(/id=["']partnerConsent["'][^>]*type=["']checkbox["']|type=["']checkbox["'][^>]*id=["']partnerConsent["']/i.test(html),`${rel}: affiliate consent checkbox missing`);
+    assert(!/id=["']partnerConsent["'][^>]*\bchecked\b/i.test(html),`${rel}: affiliate consent must never be pre-checked`);
+    assert(/partnerConsent\.checked/i.test(html)&&/dataset\.affiliateUrl/i.test(html),`${rel}: affiliate URL must only be activated by consent logic`);
   }
+
+  assert(!/<script[^>]+partner-ads\.com/i.test(html),`${rel}: no Partner-Ads scripts allowed`);
+  assert(!/<(?:img|iframe)[^>]+partner-ads\.com/i.test(html),`${rel}: no Partner-Ads pixel/banner embeds allowed`);
 }
 
 assert.equal(urls.length,21,'expected 21 public URLs after CVR privacy release');
@@ -54,8 +66,10 @@ assert(!/Ingen affiliate-links er aktive endnu/i.test(purchase),'stale affiliate
 const affiliate=fs.readFileSync('affiliate.html','utf8');
 assert(new RegExp(`aktivt affiliate-samarbejde med ${APPROVED_AFFILIATE.brand}`,'i').test(affiliate),'affiliate disclosure must reflect issued Dinero partnership');
 assert(/Beregninger påvirkes aldrig/i.test(affiliate),'affiliate independence rule missing');
+assert(/samtykke/i.test(affiliate),'affiliate disclosure must explain consent before tracking');
 const privacy=fs.readFileSync('privatliv.html','utf8');
 assert(new RegExp(APPROVED_AFFILIATE.network,'i').test(privacy),'privacy page must describe Partner-Ads click boundary');
-assert(partnerLinks>=1,'issued Dinero affiliate link must remain present in at least one contextual placement');
+assert(/samtykke/i.test(privacy),'privacy page must describe affiliate consent boundary');
+assert.equal(issuedAffiliateLinks,1,'exactly one issued Dinero affiliate placement is allowed');
 
-console.log(`compliance-test: ${urls.length} public URLs checked; ${partnerLinks} issued ${APPROVED_AFFILIATE.brand} affiliate link(s) compliant; all canonicals required`);
+console.log(`compliance-test: ${urls.length} public URLs checked; ${issuedAffiliateLinks} issued ${APPROVED_AFFILIATE.brand} affiliate placement compliant; all canonicals required`);
