@@ -34,7 +34,7 @@ dump udgifter-foer-opstart.html /tmp/startup.html; grep -q 'Muligt · skal vurde
 dump 'udgifter-foer-opstart.html?m=3&t=establishment&u=business&d=1' /tmp/startup-no.html; grep -q 'Typisk nej' /tmp/startup-no.html
 dump koersel-privat-bil.html /tmp/mileage.html; grep -q '31.520' /tmp/mileage.html; grep -q '6.720' /tmp/mileage.html
 dump telefon-internet.html /tmp/phone.html; grep -q '7.800' /tmp/phone.html; grep -q '3.500' /tmp/phone.html; grep -q 'Den skattepligtige værdi beregnes kun én gang' /tmp/phone.html
-dump reklame-eller-repraesentation.html /tmp/representation.html; grep -q '400,00 kr.' /tmp/representation.html; grep -q '100 %-momsregel' /tmp/representation.html
+dump reklame-eller-repraesentation.html /tmp/representation.html; grep -q '475,00 kr.' /tmp/representation.html; grep -q '118,75 kr.' /tmp/representation.html; grep -q '25 % fradrag af købsmomsen' /tmp/representation.html
 dump hjemmekontor-fradrag.html /tmp/home.html; grep -q 'Stærkt signal: typisk nej til selve rummet' /tmp/home.html; grep -q '6.000 kr.' /tmp/home.html
 dump kursus-eller-uddannelse-fradrag.html /tmp/course.html; grep -q 'Stærkt signal: mulig driftsudgift' /tmp/course.html; grep -q '12.000 kr.' /tmp/course.html
 dump arbejdstoej-fradrag.html /tmp/workwear.html; grep -q 'Muligt fradrag' /tmp/workwear.html; grep -q '4.000 kr.' /tmp/workwear.html
