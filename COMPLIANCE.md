@@ -43,20 +43,33 @@ FirmaKroner skal hellere stoppe eller vise en afgrænsning end give et sikkert k
 - Efter produktion-deploy skal den offentlige `sitemap.xml` hentes og XML-parses, før release-flowet betragtes som fuldt grønt.
 - IndexNow må først køre efter en succesfuld Pages-deploy.
 
-## 6. Senest dobbelttjekket 2026-08-16
+## 6. Faglig audit 2026-08-16
 
-- **PMV:** PMV er til momspligtig omsætning under 50.000 kr. pr. kalenderår. Præcis 50.000 kr. er derfor ikke PMV-kompatibelt, mens den almindelige pligt til momsregistrering først indtræder, når momspligtig omsætning overstiger 50.000 kr. PMV kan ikke være momsregistreret eller have ansatte, og særlige udenlandske køb/handel kan kræve anden registrering.
-- **Digital bogføring 2026:** For de omfattede personligt ejede virksomheder er omsætningskriteriet over 300.000 kr. i to på hinanden følgende forudgående indkomstår. Præcis 300.000 kr. er ikke 'over'. En ny virksomhed kan tidligst blive omfattet fra sit tredje indkomstår.
-- **Dinero-reklame:** Dinero er på Erhvervsstyrelsens fortegnelse over registrerede bogføringssystemer. FirmaKroner beskriver det som én af flere muligheder og markerer affiliate-linket tydeligt som reklame.
-- **Google:** Search Console-verifikation er bevaret i `index.html`; sitemap valideres både lokalt og fremover efter deploy.
+Følgende områder er dobbelttjekket mod aktuelle officielle kilder og den implementerede logik:
 
-## 7. Næste auditkø
+- **PMV:** under 50.000 kr. i momspligtig kalenderårsomsætning; præcis 50.000 kr. er ikke PMV-kompatibelt, mens den almindelige momsregistreringspligt først indtræder, når omsætningen overstiger 50.000 kr. PMV kan ikke være momsregistreret eller have ansatte, og visse udenlandske køb/handel kræver anden registrering. Status: **bestået efter rettelse**.
+- **Frivillig momsregistrering under 50.000 kr.:** kalenderårsgrænsen og minimum to kalenderårs binding ved frivillig registrering er afspejlet. Status: **bestået**.
+- **Telefon og internet:** 2026-værdi 3.500 kr., samlet værdi ved telefon+internet samt internet-undtagelser er afspejlet konservativt. Status: **bestået**.
+- **Privat bil:** 2026-satser 3,94 kr./km til og med 20.000 erhvervskm og 2,28 kr./km derefter, kørebog og metodevalg er afspejlet. Status: **bestået**.
+- **Reklame/repræsentation:** restaurantcasen er rettet. Ved strengt erhvervsmæssig restaurationsydelse bruger værktøjet 25 % fradrag af købsmomsen, ikke 100 %, og derefter 25 % skattemæssigt repræsentationsfradrag af udgiften inkl. ikke-fradraget moms. Status: **bestået efter rettelse**.
+- **Udgifter før opstart:** 6 måneder behandles kun som et positivt signal, ikke automatisk godkendelse; etableringsudgifter og dokumentation holdes særskilt. Status: **bestået**.
+- **Hjemmekontor:** checker er bevidst streng ved rum med privat anvendelighed og undgår automatisk huslejeprocent; inventar vurderes separat. Status: **bestået**.
+- **Kurser/uddannelse:** vedligeholdelse/ajourføring af eksisterende faglig viden holdes adskilt fra nye kvalifikationer/nyt indkomstgrundlag. Status: **bestået**.
+- **Arbejdstøj:** specialbeklædning, privat anvendelighed og reel merudgift holdes adskilt; moms behandles særskilt. Status: **bestået**.
+- **Udenlandsk SaaS:** reverse charge, EU Rubrik A, delvis fradragsret, PMV/registreringsproblemer og faktura med udenlandsk moms er afgrænset. Status: **bestået**.
+- **Fakturakrav:** fuld kontra forenklet faktura under 3.000 kr., kundens ret til fuld faktura og nødvendige felter er afgrænset til almindeligt dansk B2B. Status: **bestået**.
+- **Hobby/erhverv:** værktøjet giver signaler, ikke juridisk klassifikation, og hobbyunderskud modregnes ikke i anden indkomst. Status: **bestået**.
+- **Digital bogføring 2026:** over 300.000 kr. i to på hinanden følgende forudgående indkomstår; præcis 300.000 kr. er ikke over; nye virksomheder kan tidligst rammes fra tredje indkomstår. Status: **bestået**.
+- **Dinero-reklame:** Dinero beskrives som ét af flere registrerede bogføringssystemer; link markeres som reklame og påvirker ikke resultatet. Status: **bestået**.
+- **Google:** Search Console-verifikation bevares i `index.html`; sitemap valideres lokalt og efter deploy. Status: **bestået i kode, offentlig efter-deploy-gate afventer denne release**.
 
-Højeste risiko først:
+## 7. Åben højrisiko-opgave
 
-1. Frivillig momsregistrering under 50.000 kr. — kalenderårsregel og bindingsperiode.
-2. Telefon/internet — 2026-værdi og privat rådighed.
-3. Privat bil — 2026-kilometersatser, metodevalg og dokumentation.
-4. Reklame/repræsentation — separat moms- og skattebehandling.
-5. Firmakøb — 2026-småaktivgrænser, blandet brug og afskrivning.
-6. Øvrige fradragscheckere — afgrænsning, dokumentation og momsspor.
+**Firmakøb** er endnu ikke markeret fuldt bestået. De centrale 2026-grænser og almindelig afskrivning er tidligere kontrolleret, men den bevarede legacy-side skal have en kontrolleret migration, fordi:
+
+1. den mangler canonical og er den eneste midlertidige undtagelse i compliance-gaten,
+2. den indeholder ældre affiliate-status-tekst,
+3. 2026-reglerne om forhøjet 108 % afskrivningsgrundlag for visse kvalificerende fabriksnye grønne driftsmidler skal enten modelleres korrekt eller tydeligt afgrænses,
+4. gamle delte `/?p=...`-links og eksisterende beregninger må ikke brydes under migrationen.
+
+Denne opgave har højere prioritet end at tilføje værktøj #16.
