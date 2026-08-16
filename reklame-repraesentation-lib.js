@@ -21,11 +21,11 @@
       deductibleExpenseBase=gross-vatDeduction;
       incomeTaxDeduction=deductibleExpenseBase;
     }else if(type==='restaurant'){
-      // Current SKAT guidance allows full input-VAT deduction for restaurant costs
-      // incurred for business connections. Other restaurant situations have their
-      // own rules, so this calculator deliberately does not guess them.
-      vatDeduction=vatRegistered&&businessConnection?vat:0;
+      // Momslovens § 42, stk. 2: 25 % of the input VAT on restaurant services
+      // can be deducted when the expense is strictly business-related.
+      vatDeduction=vatRegistered&&businessConnection?vat*0.25:0;
       deductibleExpenseBase=gross-vatDeduction;
+      // Representation deduction is 25 % of the expense including non-deductible VAT.
       incomeTaxDeduction=deductibleExpenseBase*0.25;
     }else{
       vatDeduction=0;
