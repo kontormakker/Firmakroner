@@ -29,11 +29,12 @@ jobs:
           node vat-choice-test.js
           node faktura-buffer-test.js
           node startup-expense-test.js
+          node koersel-privat-bil-test.js
 
       - name: Prepare static site
         run: |
           mkdir -p _site
-          cp index.html firmakoeb.html momsregistrering-under-50000.html faktura-buffer.html udgifter-foer-opstart.html om.html privatliv.html affiliate.html robots.txt sitemap.xml cc4bb9dc90e3aa702484656973b7baf2.txt _site/
+          cp index.html firmakoeb.html momsregistrering-under-50000.html faktura-buffer.html udgifter-foer-opstart.html koersel-privat-bil.html om.html privatliv.html affiliate.html robots.txt sitemap.xml cc4bb9dc90e3aa702484656973b7baf2.txt _site/
 
       - name: Browser smoke tests
         run: |
@@ -46,12 +47,12 @@ jobs:
             sleep 0.25
           done
 
-          for path in / /firmakoeb.html /momsregistrering-under-50000.html /faktura-buffer.html /udgifter-foer-opstart.html /om.html /privatliv.html /affiliate.html; do
+          for path in / /firmakoeb.html /momsregistrering-under-50000.html /faktura-buffer.html /udgifter-foer-opstart.html /koersel-privat-bil.html /om.html /privatliv.html /affiliate.html; do
             curl -fsS "http://127.0.0.1:4173${path}" >/dev/null
           done
           curl -fsS http://127.0.0.1:4173/cc4bb9dc90e3aa702484656973b7baf2.txt | grep -q 'cc4bb9dc90e3aa702484656973b7baf2'
           curl -fsS http://127.0.0.1:4173/robots.txt | grep -q 'sitemap.xml'
-          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'udgifter-foer-opstart.html'
+          curl -fsS http://127.0.0.1:4173/sitemap.xml | grep -q 'koersel-privat-bil.html'
 
           CHROME="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
           test -n "$CHROME"
@@ -63,6 +64,7 @@ jobs:
           grep -q 'momsregistrering-under-50000.html' /tmp/portal.html
           grep -q 'faktura-buffer.html' /tmp/portal.html
           grep -q 'udgifter-foer-opstart.html' /tmp/portal.html
+          grep -q 'koersel-privat-bil.html' /tmp/portal.html
           echo 'portal smoke ok'
 
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/firmakoeb.html' > /tmp/purchase.html
@@ -101,6 +103,14 @@ jobs:
           grep -q 'Svagere signal' /tmp/startup-old.html
           echo 'startup-expense smoke ok'
 
+          "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/koersel-privat-bil.html' > /tmp/mileage.html
+          grep -q '31.520' /tmp/mileage.html
+          grep -q '24.800' /tmp/mileage.html
+          grep -q '6.720' /tmp/mileage.html
+          grep -q 'Kilometersatsen giver' /tmp/mileage.html
+          grep -q 'kun kan skiftes opgørelsesprincip én gang' /tmp/mileage.html
+          echo 'mileage comparison smoke ok'
+
           "$CHROME" $FLAGS --dump-dom 'http://127.0.0.1:4173/affiliate.html' > /tmp/affiliate.html
           grep -q 'endnu ingen aktive affiliate-links' /tmp/affiliate.html
           grep -q 'Beregninger påvirkes aldrig' /tmp/affiliate.html
@@ -116,6 +126,8 @@ jobs:
           test -s /tmp/mobile-buffer.png
           "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-startup.png 'http://127.0.0.1:4173/udgifter-foer-opstart.html'
           test -s /tmp/mobile-startup.png
+          "$CHROME" $FLAGS --window-size=390,844 --screenshot=/tmp/mobile-mileage.png 'http://127.0.0.1:4173/koersel-privat-bil.html'
+          test -s /tmp/mobile-mileage.png
           echo 'mobile screenshots ok'
 
       - name: Configure GitHub Pages
@@ -161,6 +173,7 @@ jobs:
               "https://kontormakker.github.io/Firmakroner/momsregistrering-under-50000.html",
               "https://kontormakker.github.io/Firmakroner/faktura-buffer.html",
               "https://kontormakker.github.io/Firmakroner/udgifter-foer-opstart.html",
+              "https://kontormakker.github.io/Firmakroner/koersel-privat-bil.html",
               "https://kontormakker.github.io/Firmakroner/om.html",
               "https://kontormakker.github.io/Firmakroner/privatliv.html",
               "https://kontormakker.github.io/Firmakroner/affiliate.html"
