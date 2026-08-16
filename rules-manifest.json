@@ -21,6 +21,7 @@
     "faktura-krav-tjek.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
     "skal-jeg-bogfoere-digitalt-2026.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["erhvervsstyrelsen.dk","virksomhedsguiden.dk"]},
     "hobby-eller-erhverv.html": {"risk":"high","rateSensitive":false,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk"]},
-    "pmv-eller-enkeltmandsvirksomhed.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk","virksomhedsguiden.dk"]}
+    "pmv-eller-enkeltmandsvirksomhed.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk","virksomhedsguiden.dk"]},
+    "satser-2026.html": {"risk":"high","rateSensitive":true,"reviewedAt":"2026-08-16","reviewAfter":"2026-12-31","sources":["skat.dk","info.skat.dk"]}
   }
 }
