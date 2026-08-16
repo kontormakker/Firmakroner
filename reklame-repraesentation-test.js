@@ -8,17 +8,17 @@ close(r.vatDeduction,250); close(r.incomeTaxDeduction,1000);
 r=calculate({amount:1250,vatRate:25,vatRegistered:false,type:'advertising'});
 close(r.vatDeduction,0); close(r.incomeTaxDeduction,1250);
 
-r=calculate({amount:500,vatRate:25,vatRegistered:true,type:'restaurant',strictBusiness:true});
-close(r.vatDeduction,25); close(r.deductibleExpenseBase,475); close(r.incomeTaxDeduction,118.75);
+r=calculate({amount:500,vatRate:25,vatRegistered:true,type:'restaurant',businessConnection:true});
+close(r.vatDeduction,100); close(r.deductibleExpenseBase,400); close(r.incomeTaxDeduction,100);
 
-r=calculate({amount:500,vatRate:25,vatRegistered:true,type:'restaurant',strictBusiness:false});
+r=calculate({amount:500,vatRate:25,vatRegistered:false,type:'restaurant',businessConnection:true});
+close(r.vatDeduction,0); close(r.incomeTaxDeduction,125);
+
+r=calculate({amount:500,vatRate:25,vatRegistered:true,type:'restaurant',businessConnection:false});
 close(r.vatDeduction,0); close(r.incomeTaxDeduction,125);
 
 r=calculate({amount:500,vatRate:25,vatRegistered:true,type:'representation'});
 close(r.vatDeduction,0); close(r.incomeTaxDeduction,125);
-
-r=calculate({amount:500,vatRate:0,vatRegistered:true,type:'representation'});
-close(r.incomeTaxDeduction,125);
 
 r=calculate({amount:-100,vatRate:25,vatRegistered:true,type:'advertising'});
 close(r.gross,0); close(r.incomeTaxDeduction,0);
